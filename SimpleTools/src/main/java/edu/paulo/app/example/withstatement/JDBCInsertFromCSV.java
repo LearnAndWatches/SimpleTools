@@ -1,4 +1,4 @@
-package edu.paulo.app.example;
+package edu.paulo.app.example.withstatement;
 
 import java.sql.DriverManager;
 

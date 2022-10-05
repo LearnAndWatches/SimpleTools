@@ -63,21 +63,5 @@ public class Crypto {
         x = new Crypto().performDecrypt("bea6e02a5eea0d40e8c6d3971b78f617");
         System.out.println(x);
 
-
-        try
-        {
-            if(args[0].equalsIgnoreCase("encrypt"))
-            {
-//                System.out.println((new StringBuilder()).append("encrypt result: ").append(performEncrypt(defaultKey, args[1])).toString());
-            }
-            if(args[0].equalsIgnoreCase("decrypt"))
-            {
-//                System.out.println((new StringBuilder()).append("decrypt result: ").append(performDecrypt(defaultKey, args[1])).toString());
-            }
-        }
-        catch(Exception e)
-        {
-//            e.printStackTrace();
-        }
     }
 }
