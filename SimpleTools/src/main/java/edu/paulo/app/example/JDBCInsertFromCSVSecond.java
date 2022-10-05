@@ -5,22 +5,23 @@ import java.sql.DriverManager;
 import org.mariadb.jdbc.Connection;
 import org.mariadb.jdbc.Statement;
 
+import edu.paulo.app.util.CSVScanner;
 import edu.paulo.app.util.ExcelReader;
 
-public class JDBCInsertFromExcelSecond {
+public class JDBCInsertFromCSVSecond {
 
 	
 	private Connection conn = null;
 	private Statement stmt = null;
-	private ExcelReader excelReader ;
+	private CSVScanner csvReader ;
 	private StringBuilder sBuild = new StringBuilder();
 	private String[][] dDriven ;
-	private int intCol  = 0; /*accomodate count of column in excel file*/
+	private int intCol  = 0; /*accomodate count of column in csv file*/
 	private String queryz = "";
 	int intCheck = 0;
     
 	public static void main(String[] args) {
-		JDBCInsertFromExcelSecond jife = new JDBCInsertFromExcelSecond();
+		JDBCInsertFromCSVSecond jife = new JDBCInsertFromCSVSecond();
 	    String [] strCon = new String[4];
 	    strCon[0] = "org.mariadb.jdbc.Driver";
 		strCon[1] = "jdbc:mariadb://localhost:3309/z_acf";
@@ -28,12 +29,12 @@ public class JDBCInsertFromExcelSecond {
 		strCon[3] = "root";
 		
 		/*Parameter order , path excel file --- sheet name ---- table name ---- driver & connection string*/
-		jife.setData("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo", strCon);
+		jife.setData("./data/DataDriven.csv", "insert_demo", strCon);
    }
 	
-	public void setData(String strPathExcel, String strSheetName, String tableName, String[] conString)
+	public void setData(String strPathCSV, String tableName, String[] conString)
 	{
-		excelReader = new ExcelReader(strPathExcel, strSheetName);
+		csvReader = new CSVScanner(strPathCSV);
 		/*SET DRIVER BY PARAMETER*/
 		try {
             Class.forName(conString[0]);
@@ -41,18 +42,18 @@ public class JDBCInsertFromExcelSecond {
 		    System.out.println("Connection is created successfully!!");
 		    stmt = conn.createStatement();
 			
-		    execData(stmt, conn, excelReader,tableName);
+		    execData(stmt, conn, csvReader,tableName);
          } catch (Exception e) {
             System.out.println(e.getMessage());
          }		
 	}
 	
-	public void execData(Statement stment, Connection connects, ExcelReader eR,String tabName)
+	public void execData(Statement stment, Connection connects, CSVScanner csvR,String tabName)
 	{
 		
 	      try {
-	    	  dDriven = eR.getAllData();
-	  	      intCol  = eR.getColCount();/*need this variable to help data looping for excel datas*/
+	    	  dDriven = csvR.getBR();
+	  	      intCol  = csvR.getCol();/*need this variable to help data looping for csv datas*/
 	  		  
 	  		  
 	  		  

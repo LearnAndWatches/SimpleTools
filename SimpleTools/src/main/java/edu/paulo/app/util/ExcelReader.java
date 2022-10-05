@@ -19,6 +19,7 @@ public class ExcelReader {
 	private int intRowCount;
 	private int intColCount;
 	private String[][] strAllData;
+	private String[][] arrWithoutHeader;
 	private int loopRows;
 	private FileInputStream excelFile;
 	
@@ -26,9 +27,10 @@ public class ExcelReader {
 		try {
 			excelFile = new FileInputStream(new File(excelPath));
 			wBook = new XSSFWorkbook(excelPath);/**/
-			sheet = wBook.getSheet(sheetName);
+			sheet = wBook.getSheet(sheetName);			
 			getRowCount();/*Must Generated first*/
 			getColCount();/*Must Generated first*/
+			setData();/*SET ALL DATA*/
 			
 		} catch (IOException e) {
 			System.out.println(""+e.getMessage());			
@@ -51,12 +53,11 @@ public class ExcelReader {
 		return r;
 	}
 	
-	/*
-	 * if you want to get all data and proceed it from two dimension String array object, using this method
-	 */
-	public String[][] getAllData()
+	
+	public void setData()
 	{
-		strAllData = new String[intRowCount][intColCount];
+		strAllData = new String[intRowCount][intColCount];		
+		arrWithoutHeader = new String[intRowCount-1][intColCount];/*BECAUSE OF remove a Header so Row for this object must be minus 1 */
 		loopRows =0;
 		Iterator<Row> rX = sheet.iterator();
 		
@@ -65,14 +66,33 @@ public class ExcelReader {
 			Row rows = rX.next();
 			for(int j=0;j<intColCount;j++)
 			{
+				if(loopRows!=0)
+				{
+					/*BECAUSE OF remove a Header so Row for this object must be minus 1 */
+					arrWithoutHeader [loopRows-1][j] = getCellData(loopRows,j).toString();
+				}
 				strAllData[loopRows][j] = getCellData(loopRows,j).toString();
 			}
 			loopRows++;
 		}
-		
+		this.strAllData = strAllData;
+		this.arrWithoutHeader = arrWithoutHeader;		
+	}
+	
+	/*
+	 * if you want to get all data and proceed it from two dimension String array object, using this method
+	 */
+	public String[][] getAllData()
+	{
 		return strAllData;
 	}
 	
+	public String[][] getDataWithoutHeader()
+	{
+		return arrWithoutHeader;
+	}
+	
+	/*GET SPECIFIC DATA USING ROW NUMBER AND COLUMN NUMBER*/
 	public Object getCellData(int rowNum, int colNum)
 	{
 		dFormatter = new DataFormatter();
