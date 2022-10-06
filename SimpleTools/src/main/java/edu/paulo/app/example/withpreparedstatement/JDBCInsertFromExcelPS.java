@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import org.mariadb.jdbc.Connection;
 
+import edu.paulo.app.util.ConfigProperties;
 import edu.paulo.app.util.ExcelReader;
 
 public class JDBCInsertFromExcelPS {
@@ -21,17 +22,23 @@ public class JDBCInsertFromExcelPS {
 	private String queryzHeader = "";
     int intCheck = 0;
     
+    public JDBCInsertFromExcelPS(String strPathExcel, String strSheetName, String tableName, String[] conString)
+    {
+    	setData(strPathExcel, strSheetName, tableName, conString);
+    }
+    
 	public static void main(String[] args) {
 
-		JDBCInsertFromExcelPS jife = new JDBCInsertFromExcelPS();
+		
+		ConfigProperties cProp = new ConfigProperties();		
 	    String [] strCon = new String[4];
-	    strCon[0] = "org.mariadb.jdbc.Driver";/*Database Driver*/
-		strCon[1] = "jdbc:mariadb://localhost:3309/z_acf";/*Connection String*/
-		strCon[2] = "root";/*Database userName*/
-		strCon[3] = "root";/*Database passwOrd*/
+	    strCon[0] = cProp.getDbDriver();/*Database Driver*/
+		strCon[1] = cProp.getDbConnString();/*Connection String*/
+		strCon[2] = cProp.getDbUserName();/*Database userName*/
+		strCon[3] = cProp.getDbPassword();/*Database passwOrd*/
 		
 		/*Parameter order , path excel file --- sheet name ---- table name ---- driver & connection string*/
-		jife.setData("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo", strCon);
+		JDBCInsertFromExcelPS jife = new JDBCInsertFromExcelPS("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo", strCon);
 	}
 	
 	public void setData(String strPathExcel, String strSheetName, String tableName, String[] conString)

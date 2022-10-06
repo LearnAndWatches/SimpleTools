@@ -8,7 +8,11 @@ import java.sql.SQLException;
 import org.mariadb.jdbc.Connection;
 
 import edu.paulo.app.util.CSVScanner;
+import edu.paulo.app.util.ConfigProperties;
 
+/*
+ * THIS CLASS USING COMPLEX DATA TO THE complex_data table
+ */
 public class JDBCInsertFromCSVPSTwo {
 
 	private Connection conn = null;
@@ -21,17 +25,23 @@ public class JDBCInsertFromCSVPSTwo {
 	private String queryzHeader = "";
     int intCheck = 0;
     
+    public JDBCInsertFromCSVPSTwo(String strPathCSV, String tableName, String[] conString)
+	{
+		setData(strPathCSV, tableName, conString);
+	}
+    
 	public static void main(String[] args) {
 
-		JDBCInsertFromCSVPSTwo jife = new JDBCInsertFromCSVPSTwo();
+		
+		ConfigProperties cProp = new ConfigProperties();
 	    String [] strCon = new String[4];
-	    strCon[0] = "org.mariadb.jdbc.Driver";/*Database Driver*/
-		strCon[1] = "jdbc:mariadb://localhost:3309/z_acf";/*Connection String*/
-		strCon[2] = "root";/*Database userName*/
-		strCon[3] = "root";/*Database passwOrd*/
+	    strCon[0] = cProp.getDbDriver();/*Database Driver*/
+		strCon[1] = cProp.getDbConnString();/*Connection String*/
+		strCon[2] = cProp.getDbUserName();/*Database userName*/
+		strCon[3] = cProp.getDbPassword();/*Database passwOrd*/
 		
 		/*Parameter order , path excel file --- sheet name ---- table name ---- driver & connection string*/
-		jife.setData("./data/DataComplex.csv","complex_data", strCon);
+		JDBCInsertFromCSVPSTwo jife = new JDBCInsertFromCSVPSTwo("./data/DataComplex.csv","complex_data", strCon);
 	}
 	
 	public void setData(String strPathCSV, String tableName, String[] conString)

@@ -8,7 +8,10 @@ import java.sql.SQLException;
 import org.mariadb.jdbc.Connection;
 
 import edu.paulo.app.util.CSVScanner;
-
+import edu.paulo.app.util.ConfigProperties;
+/*
+ * THIS CLASS USING SIMPLE DATA TO THE insert_demo table
+ */
 public class JDBCInsertFromCSVPS {
 
 	private Connection conn = null;
@@ -21,17 +24,24 @@ public class JDBCInsertFromCSVPS {
 	private String queryzHeader = "";
     int intCheck = 0;
     
+    public JDBCInsertFromCSVPS(String strPathCSV, String tableName, String[] conString)
+	{
+		setData(strPathCSV, tableName, conString);
+	}
+    
 	public static void main(String[] args) {
 
-		JDBCInsertFromCSVPS jife = new JDBCInsertFromCSVPS();
+		
+		
+		ConfigProperties cProp = new ConfigProperties();		
 	    String [] strCon = new String[4];
-	    strCon[0] = "org.mariadb.jdbc.Driver";/*Database Driver*/
-		strCon[1] = "jdbc:mariadb://localhost:3309/z_acf";/*Connection String*/
-		strCon[2] = "root";/*Database userName*/
-		strCon[3] = "root";/*Database passwOrd*/
+	    strCon[0] = cProp.getDbDriver();/*Database Driver*/
+		strCon[1] = cProp.getDbConnString();/*Connection String*/
+		strCon[2] = cProp.getDbUserName();/*Database userName*/
+		strCon[3] = cProp.getDbPassword();/*Database passwOrd*/
 		
 		/*Parameter order , path excel file --- sheet name ---- table name ---- driver & connection string*/
-		jife.setData("./data/DataDriven.csv","insert_demo", strCon);
+		JDBCInsertFromCSVPS jife = new JDBCInsertFromCSVPS("./data/DataDriven.csv","insert_demo", strCon);
 	}
 	
 	public void setData(String strPathCSV, String tableName, String[] conString)

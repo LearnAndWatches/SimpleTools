@@ -8,6 +8,9 @@ import org.mariadb.jdbc.Statement;
 
 import edu.paulo.app.util.ConfigProperties;
 import edu.paulo.app.util.ExcelReader;
+/*
+ * THIS CLASS USING SIMPLE DATA TO THE insert_demo table
+ */
 
 public class JDBCInsertFromExcel {
 
@@ -27,6 +30,7 @@ public class JDBCInsertFromExcel {
     {
     	setData(strPathExcel, strSheetName, tableName, conString);
     }
+    
 	public static void main(String[] args) {
 		
 		ConfigProperties cProp = new ConfigProperties();		
