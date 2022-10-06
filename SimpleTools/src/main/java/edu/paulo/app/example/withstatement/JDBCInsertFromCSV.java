@@ -6,7 +6,6 @@ import org.mariadb.jdbc.Connection;
 import org.mariadb.jdbc.Statement;
 
 import edu.paulo.app.util.CSVScanner;
-import edu.paulo.app.util.ExcelReader;
 
 public class JDBCInsertFromCSV {
 
@@ -89,6 +88,7 @@ public class JDBCInsertFromCSV {
 	  			}
 	  	      System.out.println("Record is inserted in the table successfully..................");
 	      } catch (Exception e) {
+	    	 System.out.println("Failed to insert Record to the table ..................!!!!");
 	         System.out.println(e.getMessage());
 	      } finally {
 	         try {

@@ -26,7 +26,7 @@ public class SimpleToolsProperties {
             dbUserName = properties.getProperty("username").toString();
             dbPassword = Crypto.performDecrypt(properties.getProperty("password").toString());
             emUsrName = properties.getProperty("email.username").toString();
-            emPassword = properties.getProperty("email.password").toString();
+            emPassword = Crypto.performDecrypt(properties.getProperty("email.password").toString());
             emPort = properties.getProperty("email.port").toString();
             emAuth = properties.getProperty("email.auth").toString();
             emStartTls = properties.getProperty("email.starttls.enable").toString();

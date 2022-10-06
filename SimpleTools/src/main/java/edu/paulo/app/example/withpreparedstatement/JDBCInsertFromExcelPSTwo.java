@@ -9,7 +9,7 @@ import org.mariadb.jdbc.Connection;
 
 import edu.paulo.app.util.ExcelReader;
 
-public class JDBCInsertFromExcelPS {
+public class JDBCInsertFromExcelPSTwo {
 
 	private Connection conn = null;
 	private PreparedStatement ps = null;
@@ -18,12 +18,11 @@ public class JDBCInsertFromExcelPS {
 	private String[][] dDriven ;
 	private int intCol  = 0; /*accomodate count of column in excel file*/
 	private String queryz = "";
-	private String queryzHeader = "";
-    int intCheck = 0;
+	int intCheck = 0;
     
 	public static void main(String[] args) {
 
-		JDBCInsertFromExcelPS jife = new JDBCInsertFromExcelPS();
+		JDBCInsertFromExcelPSTwo jife = new JDBCInsertFromExcelPSTwo();
 	    String [] strCon = new String[4];
 	    strCon[0] = "org.mariadb.jdbc.Driver";/*Database Driver*/
 		strCon[1] = "jdbc:mariadb://localhost:3309/z_acf";/*Connection String*/
@@ -31,7 +30,7 @@ public class JDBCInsertFromExcelPS {
 		strCon[3] = "root";/*Database passwOrd*/
 		
 		/*Parameter order , path excel file --- sheet name ---- table name ---- driver & connection string*/
-		jife.setData("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo", strCon);
+		jife.setData("./data/DataDriven.xlsx","ComplexData", "complex_data", strCon);
 	}
 	
 	public void setData(String strPathExcel, String strSheetName, String tableName, String[] conString)
@@ -43,7 +42,7 @@ public class JDBCInsertFromExcelPS {
             conn = (Connection) DriverManager.getConnection(conString[1],conString[2],conString[3]);
 		    System.out.println("Connection is created successfully!!");
 		    
-//		    conn.setAutoCommit(false);/*DEFAULT IS AUTOCOMMIT TRUE , IF THIS METHOD REMOVED , ENTRY DATA WILL NOT BE CLEAN !!*/
+		    conn.setAutoCommit(false);/*DEFAULT IS AUTOCOMMIT TRUE , IF THIS METHOD REMOVED , ENTRY DATA WILL NOT BE CLEAN !!*/
 		    
 		    dDriven = excelReader.getAllData();
   	        intCol  = excelReader.getColCount();
@@ -61,16 +60,16 @@ public class JDBCInsertFromExcelPS {
   	        	ps.executeUpdate();
   	        }
 //  	        int k = ps.executeUpdate();
-//  	        conn.commit();
+  	        conn.commit();
   	      System.out.println("Record is inserted in the table successfully..................");
          } catch (Exception e) {
         	System.out.println("Failed to insert Record to the table ..................!!!!");
             System.out.println(e.getMessage());            
-//            try {
-//				conn.rollback();
-//			} catch (SQLException e1) {
-//				System.out.println(e1.getMessage());
-//			}
+            try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+			}
          }
 		finally {
 			try {

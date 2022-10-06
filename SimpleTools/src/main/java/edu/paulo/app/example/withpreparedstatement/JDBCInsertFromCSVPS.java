@@ -7,13 +7,14 @@ import java.sql.SQLException;
 
 import org.mariadb.jdbc.Connection;
 
+import edu.paulo.app.util.CSVScanner;
 import edu.paulo.app.util.ExcelReader;
 
-public class JDBCInsertFromExcelPS {
+public class JDBCInsertFromCSVPS {
 
 	private Connection conn = null;
 	private PreparedStatement ps = null;
-	private ExcelReader excelReader ;
+	private CSVScanner csvScanner ;
 	private StringBuilder sBuild = new StringBuilder();
 	private String[][] dDriven ;
 	private int intCol  = 0; /*accomodate count of column in excel file*/
@@ -23,7 +24,7 @@ public class JDBCInsertFromExcelPS {
     
 	public static void main(String[] args) {
 
-		JDBCInsertFromExcelPS jife = new JDBCInsertFromExcelPS();
+		JDBCInsertFromCSVPS jife = new JDBCInsertFromCSVPS();
 	    String [] strCon = new String[4];
 	    strCon[0] = "org.mariadb.jdbc.Driver";/*Database Driver*/
 		strCon[1] = "jdbc:mariadb://localhost:3309/z_acf";/*Connection String*/
@@ -31,12 +32,12 @@ public class JDBCInsertFromExcelPS {
 		strCon[3] = "root";/*Database passwOrd*/
 		
 		/*Parameter order , path excel file --- sheet name ---- table name ---- driver & connection string*/
-		jife.setData("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo", strCon);
+		jife.setData("./data/DataDriven.csv","insert_demo", strCon);
 	}
 	
-	public void setData(String strPathExcel, String strSheetName, String tableName, String[] conString)
+	public void setData(String strPathCSV, String tableName, String[] conString)
 	{
-		excelReader = new ExcelReader(strPathExcel, strSheetName);
+		csvScanner = new CSVScanner(strPathCSV);
 		/*SET DRIVER BY PARAMETER*/
 		try {
             Class.forName(conString[0]);
@@ -45,12 +46,14 @@ public class JDBCInsertFromExcelPS {
 		    
 //		    conn.setAutoCommit(false);/*DEFAULT IS AUTOCOMMIT TRUE , IF THIS METHOD REMOVED , ENTRY DATA WILL NOT BE CLEAN !!*/
 		    
-		    dDriven = excelReader.getAllData();
-  	        intCol  = excelReader.getColCount();
+		    dDriven = csvScanner.getBR();
+  	        intCol  = csvScanner.getCol();
+  	        
   	        queryz = generateQueryInsert(dDriven, tableName, intCol);
+  	        
   	        ps = conn.prepareStatement(queryz) ;
   	        
-  	        dDriven = excelReader.getDataWithoutHeader();
+  	        dDriven = csvScanner.getDataWithoutHeader();
   	        
   	        for(int i=0;i<dDriven.length;i++)
   	        {
@@ -64,7 +67,7 @@ public class JDBCInsertFromExcelPS {
 //  	        conn.commit();
   	      System.out.println("Record is inserted in the table successfully..................");
          } catch (Exception e) {
-        	System.out.println("Failed to insert Record to the table ..................!!!!");
+        	 System.out.println("Failed to insert Record to the table ..................!!!!");
             System.out.println(e.getMessage());            
 //            try {
 //				conn.rollback();
@@ -72,7 +75,7 @@ public class JDBCInsertFromExcelPS {
 //				System.out.println(e1.getMessage());
 //			}
          }
-		finally {
+		finally {                                                                                                                                                                                                                                                                                                            
 			try {
 				closeResource(ps, conn);
 			} catch (SQLException e) {
@@ -148,6 +151,5 @@ public class JDBCInsertFromExcelPS {
             if(!connect.isClosed())
                 connect.close();
         }
-    }
-	
+    }	
 }

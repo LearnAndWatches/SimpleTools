@@ -6,7 +6,6 @@ import org.mariadb.jdbc.Connection;
 import org.mariadb.jdbc.Statement;
 
 import edu.paulo.app.util.CSVScanner;
-import edu.paulo.app.util.ExcelReader;
 
 public class JDBCInsertFromCSVSecond {
 
