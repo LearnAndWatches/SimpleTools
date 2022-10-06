@@ -1,10 +1,12 @@
 package edu.paulo.app.example.withstatement;
 
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import org.mariadb.jdbc.Connection;
 import org.mariadb.jdbc.Statement;
 
+import edu.paulo.app.util.ConfigProperties;
 import edu.paulo.app.util.ExcelReader;
 
 public class JDBCInsertFromExcelSecond {
@@ -18,17 +20,25 @@ public class JDBCInsertFromExcelSecond {
 	private int intCol  = 0; /*accomodate count of column in excel file*/
 	private String queryz = "";
 	int intCheck = 0;
-    
+	private String strQueries = "";
+	
+	public JDBCInsertFromExcelSecond(String strPathExcel, String strSheetName, String tableName, String[] conString)
+	{
+		setData(strPathExcel,strSheetName,tableName,conString);
+	}
+	
 	public static void main(String[] args) {
-		JDBCInsertFromExcelSecond jife = new JDBCInsertFromExcelSecond();
-	    String [] strCon = new String[4];
-	    strCon[0] = "org.mariadb.jdbc.Driver";
-		strCon[1] = "jdbc:mariadb://localhost:3309/z_acf";
-		strCon[2] = "root";
-		strCon[3] = "root";
 		
+		ConfigProperties cProp = new ConfigProperties();		
+	    String [] strCon = new String[4];
+	    strCon[0] = cProp.getDbDriver();/*Database Driver*/
+		strCon[1] = cProp.getDbConnString();/*Connection String*/
+		strCon[2] = cProp.getDbUserName();/*Database userName*/
+		strCon[3] = cProp.getDbPassword();/*Database passwOrd*/
+		
+		
+		JDBCInsertFromExcelSecond jife = new JDBCInsertFromExcelSecond("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo", strCon);
 		/*Parameter order , path excel file --- sheet name ---- table name ---- driver & connection string*/
-		jife.setData("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo", strCon);
    }
 	
 	public void setData(String strPathExcel, String strSheetName, String tableName, String[] conString)
@@ -55,7 +65,7 @@ public class JDBCInsertFromExcelSecond {
 	  	      intCol  = eR.getColCount();/*need this variable to help data looping for excel datas*/
 	  		  
 	  		  
-	  		  
+	  	    connects.setAutoCommit(false);/*DEFAULT IS AUTOCOMMIT TRUE , IF THIS METHOD REMOVED , ENTRY DATA WILL NOT BE CLEAN !!*/
 		  	    /*GENERATE QUERY HEADER*/
 		  		sBuild.setLength(0);
 		  		queryz = sBuild.append("INSERT INTO ").append(tabName).append(" ( ").toString();
@@ -96,26 +106,44 @@ public class JDBCInsertFromExcelSecond {
 	  			
 	  			sBuild.setLength(0);
   				queryz = sBuild.append(queryz.substring(0, queryz.length()-3)).append(";").toString();
-  				
+  				this.strQueries = queryz;/*SET STRING QUERIES*/
   				System.out.println(queryz); /*if you just want to take the string from generate query, uncomment this*/
 //	  				stment.executeUpdate(queryz);/*if you want to execute sql statement from jdbc uncomment this*/
-	  	      System.out.println("Record is inserted in the table successfully..................");
+  				connects.commit();
+  				System.out.println("Record is inserted in the table successfully..................");
 	      } catch (Exception e) {
-	         e.getMessage();
+	         System.out.println(e.getMessage());
+           try {
+				connects.rollback();
+			} catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+			}
 	      } finally {
 	         try {
-	            if (stment != null)
-	            	connects.close();
-	         } catch (Exception e) {
-	        	 e.getMessage();
-	         }
-	         try {
-	            if (connects != null)
-	            	connects.close();
-	         } catch (Exception e) {
-	            e.getMessage();
-	         }  
+				closeResource(stment, connects);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage()+" --- "+e.getCause());
+			}  
 	      }
 	      System.out.println("Please check it in the MariaDB/MySQL Table......... ……..");
 	}
+	
+	/*TO GET QUERIES , RESULT FROM GENERATE*/
+	public String getStrQueries()
+	{
+		return strQueries;
+	}
+	
+	public void closeResource(Statement stmt, Connection connect) throws SQLException{
+        if(stmt != null) {
+            if(!stmt.isClosed())
+            	stmt.close();
+            stmt = null;
+        }
+
+        if(connect != null) {
+            if(!connect.isClosed())
+                connect.close();
+        }
+    }
 }

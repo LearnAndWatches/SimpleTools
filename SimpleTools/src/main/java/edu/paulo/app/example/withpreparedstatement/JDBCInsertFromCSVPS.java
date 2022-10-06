@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import org.mariadb.jdbc.Connection;
 
 import edu.paulo.app.util.CSVScanner;
-import edu.paulo.app.util.ExcelReader;
 
 public class JDBCInsertFromCSVPS {
 

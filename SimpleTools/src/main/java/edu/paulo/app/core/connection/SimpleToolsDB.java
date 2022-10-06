@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import org.mariadb.jdbc.Driver;
 
+import edu.paulo.app.util.ConfigProperties;
 import edu.paulo.app.util.Crypto;
-import edu.paulo.app.util.SimpleToolsProperties;
 
 public class SimpleToolsDB {
 
@@ -22,7 +22,7 @@ public class SimpleToolsDB {
     private StringBuilder sbuilds;
     private StringBuilder sbuildz;
     private Logger logger = Logger.getLogger(SimpleToolsDB.class);
-    private SimpleToolsProperties sToolsProp;
+    private ConfigProperties cProp;
     private String sDrvClass ;
     private String sConString;
     private String sLogin;
@@ -34,11 +34,11 @@ public class SimpleToolsDB {
         sbuildz = new StringBuilder();
         exceptionString = new String[3];
         exceptionString[0] = thisClassNamez;
-        sToolsProp = new SimpleToolsProperties();
-        sDrvClass = sToolsProp.getDbDriver();
-        sConString = sToolsProp.getDbConnString();
-        sLogin = sToolsProp.getDbUserName();
-        sPwd = sToolsProp.getDbPassword();
+        cProp = new ConfigProperties();
+        sDrvClass = cProp.getDbDriver();
+        sConString = cProp.getDbConnString();
+        sLogin = cProp.getDbUserName();
+        sPwd = cProp.getDbPassword();
     }
     
     public void SetDatabaseConnection(Connection conn) {
@@ -49,7 +49,7 @@ public class SimpleToolsDB {
             DriverManager.deregisterDriver(driver);
             driver =null;
         } catch (SQLException e) {
-        	exceptionStringz(exceptionString,e,sToolsProp.getfException());
+        	exceptionStringz(exceptionString,e,cProp.getfException());
         }
     }
     
@@ -64,7 +64,7 @@ public class SimpleToolsDB {
             DriverManager.registerDriver(driver);
             conz = DriverManager.getConnection(sConString, sLogin, sPwd);
         } catch(Exception e) {
-        	exceptionStringz(exceptionString,e,sToolsProp.getfException());
+        	exceptionStringz(exceptionString,e,cProp.getfException());
         	conz = null;
         }
         return conz;
@@ -88,7 +88,7 @@ public class SimpleToolsDB {
                 preStmt.setString(i+1, obj.toString());
             }
         }   catch (SQLException e) {
-        	exceptionStringz(exceptionString,e,sToolsProp.getfException());
+        	exceptionStringz(exceptionString,e,cProp.getfException());
         }
     }
     
@@ -110,18 +110,18 @@ public class SimpleToolsDB {
             done = 0;
             exceptionString[1] = "executeQuery(String query)==> con.rollback()";
             
-            exceptionStringz(exceptionString,e,sToolsProp.getfException());
+            exceptionStringz(exceptionString,e,cProp.getfException());
             try {
                 con.rollback();
             } catch (SQLException ex) {
-            	exceptionStringz(exceptionString,e,sToolsProp.getfException());
+            	exceptionStringz(exceptionString,e,cProp.getfException());
             }
         }finally {
             try{
                 closeResource(ps,con);
             }   catch (SQLException e){
                 exceptionString[1] = "executeQuery(String query) ==> finally -> closeResource(ps,con)";                
-                exceptionStringz(exceptionString,e,sToolsProp.getfException());
+                exceptionStringz(exceptionString,e,cProp.getfException());
             }
         }
         return done;

@@ -3,6 +3,56 @@
   <groupId>SimpleTools</groupId>
   <artifactId>SimpleTools</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>Sharing-Tools</name>
+  <url>http://maven.apache.org</url>
+  
+	<build>
+        <pluginManagement>
+			<plugins>
+				 <plugin>
+				 	<groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-surefire-plugin</artifactId>
+				    <version>3.0.0-M7</version>				    		
+				 </plugin>
+				 
+				 <plugin>
+			 		<groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-compiler-plugin</artifactId>
+				    <version>3.10.1</version>
+				    <configuration>
+				    	<source>17</source>
+				    	<target>17</target>
+				    </configuration>
+				 </plugin>
+				 
+				 <plugin>
+				      <groupId>org.apache.maven.plugins</groupId>
+				    	<artifactId>maven-assembly-plugin</artifactId>
+				      <configuration>
+				        <archive>
+				          <manifest>
+				            <mainClass>edu.paulo.app.GoLive</mainClass>
+				          </manifest>
+				        </archive>
+				        <descriptorRefs>
+				          <descriptorRef>jar-with-dependencies</descriptorRef>
+				        </descriptorRefs>
+				      </configuration>
+				      <executions>
+				        <execution>
+				          <id>make-assembly</id> <!-- this is used for inheritance merges -->
+				          <phase>package</phase> <!-- bind to the packaging phase -->
+				          <goals>
+				            <goal>single</goal><!-- command to build : clean compile assembly:single -->
+				          </goals>
+				        </execution>
+				      </executions>
+				    </plugin>
+			 </plugins>        
+        </pluginManagement>
+    </build>  
+  
   <dependencies>
   
   <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
@@ -14,10 +64,10 @@
 
 
   	<dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk15on</artifactId>
-      <version>1.59</version>
-    </dependency>
+	    <groupId>org.bouncycastle</groupId>
+	    <artifactId>bcprov-jdk15to18</artifactId>
+	   <version>1.72</version>
+	</dependency>
     
     <dependency>
       <groupId>commons-codec</groupId>
@@ -57,5 +107,12 @@
 	    <version>2.0.26</version>
 	</dependency>
 
-  	</dependencies>
+  	</dependencies>	
+
+	<properties>
+		<!-- Generic properties -->
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties> 
 </project>

@@ -1,8 +1,10 @@
 package edu.paulo.app.util;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
-public class SimpleToolsProperties {
+public class ConfigProperties {
 
 	private Properties properties = new Properties();
 	private String dbDriver ;
@@ -16,11 +18,13 @@ public class SimpleToolsProperties {
     private String emStartTls ;
     private String fDelay;
     private String fException;
+    FileReader fReader;
     
-    public SimpleToolsProperties()
+    public ConfigProperties()
     {
     	try {
-			properties.load(this.getClass().getClassLoader().getResourceAsStream("Application.properties"));
+    		fReader = new FileReader("./config.properties");
+    		properties.load(fReader);
 			dbDriver = properties.getProperty("driver").toString();
             dbConnString = properties.getProperty("connection.string").toString();
             dbUserName = properties.getProperty("username").toString();
@@ -34,6 +38,12 @@ public class SimpleToolsProperties {
             fDelay = properties.getProperty("flag.delay").toString();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+		}
+    	finally {
+    		try {
+    			fReader.close();
+			} catch (IOException e) {
+			}
 		}
     }
 

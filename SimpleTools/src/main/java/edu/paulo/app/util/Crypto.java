@@ -55,7 +55,7 @@ public class Crypto {
 
     public static void main(String[] args) {
 
-        String x = new Crypto().performEncrypt("Adm1n_1234");
+        String x = new Crypto().performEncrypt("Admin_123");
         
         
         System.out.println(x);

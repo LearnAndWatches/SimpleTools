@@ -1,11 +1,13 @@
 package edu.paulo.app.example.withstatement;
 
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import org.mariadb.jdbc.Connection;
 import org.mariadb.jdbc.Statement;
 
 import edu.paulo.app.util.CSVScanner;
+import edu.paulo.app.util.ConfigProperties;
 
 public class JDBCInsertFromCSV {
 
@@ -18,17 +20,23 @@ public class JDBCInsertFromCSV {
 	private int intCol  = 0; /*accomodate count of column in csv file*/
 	private String queryz = "";
 	private String queryzHeader = "";
+	private String strQueries = "";
+	
+	public JDBCInsertFromCSV(String strPathCSV, String tableName, String[] conString)
+	{
+		setData(strPathCSV, tableName, conString);
+	}
 	
     public static void main(String[] args) {
-		JDBCInsertFromCSV jife = new JDBCInsertFromCSV();
+		ConfigProperties cProp = new ConfigProperties();		
 	    String [] strCon = new String[4];
-	    strCon[0] = "org.mariadb.jdbc.Driver";/*Database Driver*/
-		strCon[1] = "jdbc:mariadb://localhost:3309/z_acf";/*Connection String*/
-		strCon[2] = "root";/*Database userName*/
-		strCon[3] = "root";/*Database passwOrd*/
+	    strCon[0] = cProp.getDbDriver();/*Database Driver*/
+		strCon[1] = cProp.getDbConnString();/*Connection String*/
+		strCon[2] = cProp.getDbUserName();/*Database userName*/
+		strCon[3] = cProp.getDbPassword();/*Database passwOrd*/
 		
+		JDBCInsertFromCSV jife = new JDBCInsertFromCSV("./data/DataDriven.csv", "insert_demo", strCon);
 		/*Parameter order , path csv file --- table name ---- driver & connection string*/
-		jife.setData("./data/DataDriven.csv", "insert_demo", strCon);
    }
 	
 	public void setData(String strPathCSV, String tableName, String[] conString)
@@ -53,7 +61,8 @@ public class JDBCInsertFromCSV {
 	      try {
 	    	  dDriven = csvR.getBR();
 	  	      intCol  = csvR.getCol();/*need this variable to help data looping for csv datas*/
-	  		  
+	  	    connects.setAutoCommit(false);/*DEFAULT IS AUTOCOMMIT TRUE , IF THIS METHOD REMOVED , ENTRY DATA WILL NOT BE CLEAN !!*/
+	  	    
 	  		  /*GENERATE QUERY HEADER*/
 	  		  sBuild.setLength(0);
 	  		  queryzHeader = sBuild.append("INSERT INTO ").append(tabName).append(" ( ").toString();
@@ -83,27 +92,45 @@ public class JDBCInsertFromCSV {
 	  				}
 	  				sBuild.setLength(0);
 	  				queryz = sBuild.append(queryz.substring(0, queryz.length()-1)).append(");").toString();
+	  				this.strQueries = queryz;
 	  				System.out.println(queryz); /*if you just want to take the string from generate query, uncomment this*/
-//		  				stment.executeUpdate(queryz);/*if you want to execute sql statement from jdbc uncomment this*/
+		  				stment.executeUpdate(queryz);/*if you want to execute sql statement from jdbc uncomment this*/
 	  			}
-	  	      System.out.println("Record is inserted in the table successfully..................");
-	      } catch (Exception e) {
-	    	 System.out.println("Failed to insert Record to the table ..................!!!!");
-	         System.out.println(e.getMessage());
-	      } finally {
-	         try {
-	            if (stment != null)
-	            	connects.close();
-	         } catch (Exception e) {
-	        	 e.getMessage();
-	         }
-	         try {
-	            if (connects != null)
-	            	connects.close();
-	         } catch (Exception e) {
-	            e.getMessage();
-	         }
-	      }
+	  			 connects.commit();
+  				System.out.println("Record is inserted in the table successfully..................");
+		      } catch (Exception e) {
+		         System.out.println(e.getMessage());
+	           try {
+					connects.rollback();
+				} catch (SQLException e1) {
+					System.out.println(e1.getMessage());
+				}
+		      } finally {
+		         try {
+					closeResource(stment, connects);
+				} catch (SQLException e) {
+					System.out.println(e.getMessage()+" --- "+e.getCause());
+				}  
+		      }
 	      System.out.println("Please check it in the MariaDB/MySQL Table......... ……..");
 	}
+	
+	/*TO GET QUERIES , RESULT FROM GENERATE*/
+	public String getStrQueries()
+	{
+		return strQueries;
+	}
+	
+	public void closeResource(Statement stmt, Connection connect) throws SQLException{
+        if(stmt != null) {
+            if(!stmt.isClosed())
+            	stmt.close();
+            stmt = null;
+        }
+
+        if(connect != null) {
+            if(!connect.isClosed())
+                connect.close();
+        }
+    }
 }
