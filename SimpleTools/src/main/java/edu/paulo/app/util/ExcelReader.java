@@ -1,5 +1,6 @@
 package edu.paulo.app.util;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import edu.paulo.app.core.connection.SimpleToolsDB;
 
 public class ExcelReader {
 	
@@ -22,24 +25,37 @@ public class ExcelReader {
 	private String[][] arrWithoutHeader;
 	private int loopRows;
 	private FileInputStream excelFile;
+	private BufferedInputStream inputBuff;
+	private ConfigProperties cProp ;
+	private SimpleToolsDB stdb;
+	private String[] exceptionString = new String[2];
 	
 	public ExcelReader(String excelPath, String sheetName) {
+		exceptionString[0] = "ExcelReader";
+		exceptionString[1] = "ExcelReader(String excelPath, String sheetName)";
 		try {
+			cProp = new ConfigProperties();
+		    stdb = new SimpleToolsDB();
 			excelFile = new FileInputStream(new File(excelPath));
-			wBook = new XSSFWorkbook(excelPath);/**/
+			inputBuff = new BufferedInputStream(excelFile);
+			wBook = new XSSFWorkbook(inputBuff);/**/
 			sheet = wBook.getSheet(sheetName);			
 			getRowCount();/*Must Generated first*/
 			getColCount();/*Must Generated first*/
 			setData();/*SET ALL DATA*/
 			
-		} catch (IOException e) {
-			System.out.println(""+e.getMessage());			
+		} catch (Exception e) {
+			e.printStackTrace();
+			stdb.exceptionStringz(exceptionString, e, cProp.getfException());		
 		}
 		finally {
 			try {
 				excelFile.close();
+				inputBuff.close();
+				wBook.close();
 			} catch (IOException e) {
-				System.out.println(""+e.getCause());
+				e.printStackTrace();
+				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}
 		}
 	}
@@ -56,24 +72,32 @@ public class ExcelReader {
 	
 	public void setData()
 	{
-		strAllData = new String[intRowCount][intColCount];		
-		arrWithoutHeader = new String[intRowCount-1][intColCount];/*BECAUSE OF remove a Header so Row for this object must be minus 1 */
-		loopRows =0;
-		Iterator<Row> rX = sheet.iterator();
-		
-		while(rX.hasNext())
+		try
 		{
-			Row rows = rX.next();
-			for(int j=0;j<intColCount;j++)
+			exceptionString[1] = "setData()";
+			strAllData = new String[intRowCount][intColCount];		
+			arrWithoutHeader = new String[intRowCount-1][intColCount];/*BECAUSE OF remove a Header so Row for this object must be minus 1 */
+			loopRows =0;
+			Iterator<Row> rX = sheet.iterator();
+			
+			while(rX.hasNext())
 			{
-				if(loopRows!=0)
+				Row rows = rX.next();
+				for(int j=0;j<intColCount;j++)
 				{
-					/*BECAUSE OF remove a Header so Row for this object must be minus 1 */
-					arrWithoutHeader [loopRows-1][j] = getCellData(loopRows,j).toString();
+					if(loopRows!=0)
+					{
+						/*BECAUSE OF remove a Header so Row for this object must be minus 1 */
+						arrWithoutHeader [loopRows-1][j] = getCellData(loopRows,j).toString();
+					}
+					strAllData[loopRows][j] = getCellData(loopRows,j).toString();
 				}
-				strAllData[loopRows][j] = getCellData(loopRows,j).toString();
+				loopRows++;
 			}
-			loopRows++;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}
 		this.strAllData = strAllData;
 		this.arrWithoutHeader = arrWithoutHeader;		

@@ -7,7 +7,6 @@ public class GoLive {
 	public static void main(String[] args) {
 		ConfigProperties sTP = new ConfigProperties();
 		System.out.println(sTP.getDbConnString());
-		System.out.println(sTP.getDbDriver());
 		System.out.println(sTP.getDbPassword());
 		System.out.println(sTP.getDbUserName());
 		System.out.println(sTP.getEmAuth());

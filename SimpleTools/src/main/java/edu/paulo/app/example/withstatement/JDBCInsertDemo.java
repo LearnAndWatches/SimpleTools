@@ -1,46 +1,42 @@
 package edu.paulo.app.example.withstatement;
 
-import java.sql.DriverManager;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-import org.mariadb.jdbc.Connection;
-import org.mariadb.jdbc.Statement;
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.util.ConfigProperties;
 
 public class JDBCInsertDemo {
+	
 	   public static void main(String[] args) {
-		   Connection conn = null;
+		   	  Connection conn = null;
 		      Statement stmt = null;
+		      SimpleToolsDB stdb = new SimpleToolsDB();
+		      ConfigProperties cProp = new ConfigProperties();
+		      String[] exceptionString = new String[2];
+		      exceptionString[0] = "JDBCInsertDemo";
+		      exceptionString[1] = "main method";
+		      
 		      try {
-		         try {
-		            Class.forName("org.mariadb.jdbc.Driver");
-		         } catch (Exception e) {
-		            System.out.println(e);
-		      }
-		      conn = (Connection) DriverManager.getConnection("jdbc:mariadb://localhost:3309/z_acf", "root", "root");
-		      System.out.println("Connection is created successfully:");
-		      stmt = (Statement) conn.createStatement();
-		      String queryz = "INSERT INTO insert_demo " + "VALUES (1, 'John', 'Smith')";
-		      stmt.executeUpdate(queryz);
-		      
-		      queryz = "INSERT INTO insert_demo " + "VALUES (2, 'Carol', 'Alexandria')";
-		      stmt.executeUpdate(queryz);
-		      
-		      System.out.println("Record is inserted in the table successfully..................");
-		      } catch (SQLException excep) {
-		         excep.printStackTrace();
+			      conn = stdb.getDatabaseConnection();
+			      System.out.println("Connection is created successfully:");
+			      stmt = conn.createStatement();
+			      String queryz = "INSERT INTO insert_demo " + "VALUES (1, 'John', 'Smith')";
+			      stmt.executeUpdate(queryz);
+			      
+			      queryz = "INSERT INTO insert_demo " + "VALUES (2, 'Carol', 'Alexandria')";
+			      stmt.executeUpdate(queryz);
+			      
+			      System.out.println("Record is inserted in the table successfully..................");
 		      } catch (Exception excep) {
-		         excep.printStackTrace();
+		    	  stdb.exceptionStringz(exceptionString, excep, cProp.getfException());
 		      } finally {
 		         try {
-		            if (stmt != null)
-		               conn.close();
-		         } catch (SQLException se) {}
-		         try {
-		            if (conn != null)
-		               conn.close();
-		         } catch (SQLException se) {
-		            se.printStackTrace();
-		         }  
+					stdb.closeResource(stmt, conn);
+				} catch (SQLException e) {
+					stdb.exceptionStringz(exceptionString, e, cProp.getfException());
+				}
 		      }
 		      System.out.println("Please check it in the MySQL Table......... ……..");
 	   }

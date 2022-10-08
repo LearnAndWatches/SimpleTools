@@ -1,59 +1,57 @@
 package edu.paulo.app.example.withpreparedstatement;
 
-import java.sql.DriverManager;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.mariadb.jdbc.Connection;
-import org.mariadb.jdbc.Statement;
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.util.ConfigProperties;
+
 
 /*
  * PS = Prepared Statement
  */
 public class JDBCInsertDemoPS {
+	
 	   public static void main(String[] args) {
+		   
 	      Connection conn = null;
-	      Statement stmt = null;
-	      try {
-	         try {
-	            Class.forName("org.mariadb.jdbc.Driver");
-	         } catch (Exception e) {
-	            System.out.println(e);
-	      }
-	      conn = (Connection) DriverManager.getConnection("jdbc:mariadb://localhost:3309/z_acf", "root", "root");
-	      System.out.println("Connection is created successfully:");
-	      conn.setAutoCommit(false);/*DEFAULT IS AUTOCOMMIT TRUE !!*/
-	      String queryz = "INSERT INTO insert_demo ( id,first_name,last_name) VALUES (?,?,?)";
-	      PreparedStatement preparedStatement = conn.prepareStatement(queryz) ;
-	      preparedStatement.setString(1, "1");
-          preparedStatement.setString(2, "Andhika");
-          preparedStatement.setString(3, "Bagaskara");
+	      PreparedStatement pstmt = null;
+	      ConfigProperties cProp = new ConfigProperties();		
+	      String[] exceptionString = new String[2];
+	      exceptionString[0] = "JDBCInsertDemoPS";
+	      exceptionString[1] = "main(String[] args)";
+	      SimpleToolsDB stdb = new SimpleToolsDB();
 
-          preparedStatement.addBatch();
-	      int row = preparedStatement.executeUpdate();
-	      conn.commit();
+	      try {
+	    	  
+		      conn = stdb.getDatabaseConnection();
+		      System.out.println("Connection is created successfully:");
+		      conn.setAutoCommit(false);/*DEFAULT IS AUTOCOMMIT TRUE !!*/
+		      String queryz = "INSERT INTO insert_demo ( id,first_name,last_name) VALUES (?,?,?)";
+		      pstmt = conn.prepareStatement(queryz) ;
+		      pstmt.setString(1, "1");
+	          pstmt.setString(2, "Andhika");
+	          pstmt.setString(3, "Bagaskara");
+	
+	          pstmt.addBatch();
+		      int row = pstmt.executeUpdate();
+		      conn.commit();
 	      
-	      System.out.println("Record is inserted in the table successfully..................");
+		      System.out.println("Record is inserted in the table successfully..................");
 	      }catch (Exception e) {
-	    	  System.out.println(e.getMessage()+" data error !! ");
+	    	   stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 	    	  try {
 				conn.rollback();
-				System.out.println("MAYDAY MAYDAY --- ROLLBACK!!");
 			} catch (SQLException e1) {
-				System.out.println(e1.getMessage());
+				stdb.exceptionStringz(exceptionString, e1, cProp.getfException());
 			}
 	      } finally {
-	         try {
-	            if (stmt != null)
-	               conn.close();
-	         } catch (SQLException e) {System.out.println(e.getMessage());}
-	         
-	         try {
-	            if (conn != null)
-	               conn.close();
-	         } catch (SQLException e) {
-	        	 System.out.println(e.getMessage());
-	         }
+	    	  try {
+				stdb.closeResource(pstmt, conn);
+			} catch (SQLException e) {
+				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
+			}
 	      }
 	      System.out.println("Please check it in the MariaDB/MySQL Table......... ……..");
 	   }

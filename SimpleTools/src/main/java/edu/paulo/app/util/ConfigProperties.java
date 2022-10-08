@@ -4,10 +4,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+import edu.paulo.app.core.connection.SimpleToolsDB;
+
 public class ConfigProperties {
 
 	private Properties properties = new Properties();
-	private String dbDriver ;
     private String dbConnString ;
     private String dbUserName ;
     private String dbPassword ;
@@ -18,14 +19,22 @@ public class ConfigProperties {
     private String emStartTls ;
     private String fDelay;
     private String fException;
-    FileReader fReader;
-    
+    private FileReader fReader;
+    private String openCVPath;
+    private String openCVDLL;
+    private String[] exceptionString = new String[2];
+    private ConfigProperties cProp ;
+	private SimpleToolsDB stdb;
+	
     public ConfigProperties()
     {
     	try {
+    		cProp = new ConfigProperties();
+    	    stdb = new SimpleToolsDB();
     		fReader = new FileReader("./config.properties");
     		properties.load(fReader);
-			dbDriver = properties.getProperty("driver").toString();
+    		openCVDLL =  properties.getProperty("opencv.dll").toString();
+    		openCVPath = properties.getProperty("opencv.path").toString();
             dbConnString = properties.getProperty("connection.string").toString();
             dbUserName = properties.getProperty("username").toString();
             dbPassword = Crypto.performDecrypt(properties.getProperty("password").toString());
@@ -37,29 +46,36 @@ public class ConfigProperties {
             fException = properties.getProperty("flag.exception").toString();
             fDelay = properties.getProperty("flag.delay").toString();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
+			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}
     	finally {
     		try {
     			fReader.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
+				e.printStackTrace();
+				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}
 		}
     }
 
     
+    
+	public String getOpenCVDLL() {
+		return openCVDLL;
+	}
+
+	public String getOpenCVPath() {
+		return openCVPath;
+	}
+
+
 	public String getfDelay() {
 		return fDelay;
 	}
 
-
 	public String getfException() {
 		return fException;
-	}
-
-
-	public String getDbDriver() {
-		return dbDriver;
 	}
 
 	public String getDbConnString() {
@@ -92,5 +108,5 @@ public class ConfigProperties {
 
 	public String getEmStartTls() {
 		return emStartTls;
-	}	
+	}
 }

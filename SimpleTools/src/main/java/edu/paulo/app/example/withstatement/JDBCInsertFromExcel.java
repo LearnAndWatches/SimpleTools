@@ -1,11 +1,10 @@
 package edu.paulo.app.example.withstatement;
 
-import java.sql.DriverManager;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-import org.mariadb.jdbc.Connection;
-import org.mariadb.jdbc.Statement;
-
+import edu.paulo.app.core.connection.SimpleToolsDB;
 import edu.paulo.app.util.ConfigProperties;
 import edu.paulo.app.util.ExcelReader;
 /*
@@ -23,46 +22,44 @@ public class JDBCInsertFromExcel {
 	private int intCol  = 0; /*accomodate count of column in excel file*/
 	private String queryz = "";
 	private String queryzHeader = "";
-    int intCheck = 0;
     private String strQueries = "";
+    private ConfigProperties cProp ;
+    private String[] exceptionString = new String[2];
+    private SimpleToolsDB stdb;
     
-    public JDBCInsertFromExcel(String strPathExcel, String strSheetName, String tableName, String[] conString)
+    public JDBCInsertFromExcel(String strPathExcel, String strSheetName, String tableName)
     {
-    	setData(strPathExcel, strSheetName, tableName, conString);
+    	stdb = new SimpleToolsDB();
+    	exceptionString[0] = "JDBCInsertFromExcel";
+    	cProp = new ConfigProperties();
+    	setData(strPathExcel, strSheetName, tableName);
     }
     
 	public static void main(String[] args) {
-		
-		ConfigProperties cProp = new ConfigProperties();		
-	    String [] strCon = new String[4];
-	    strCon[0] = cProp.getDbDriver();/*Database Driver*/
-		strCon[1] = cProp.getDbConnString();/*Connection String*/
-		strCon[2] = cProp.getDbUserName();/*Database userName*/
-		strCon[3] = cProp.getDbPassword();/*Database passwOrd*/
-		
-		/*Parameter order , path excel file --- sheet name ---- table name ---- driver & connection string*/
-		JDBCInsertFromExcel jife = new JDBCInsertFromExcel("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo", strCon);
+		/*Parameter order , path excel file --- sheet name ---- table name */
+		JDBCInsertFromExcel jife = new JDBCInsertFromExcel("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo");
    }
 	
-	public void setData(String strPathExcel, String strSheetName, String tableName, String[] conString)
+	public void setData(String strPathExcel, String strSheetName, String tableName)
 	{
+		exceptionString[1] = "setData(String strPathExcel, String strSheetName, String tableName)";
 		excelReader = new ExcelReader(strPathExcel, strSheetName);
 		/*SET DRIVER BY PARAMETER*/
 		try {
-            Class.forName(conString[0]);
-            conn = (Connection) DriverManager.getConnection(conString[1],conString[2],conString[3]);
+            
+            conn = stdb.getDatabaseConnection();
 		    System.out.println("Connection is created successfully!!");
 		    stmt = conn.createStatement();
 			
 		    execData(stmt, conn, excelReader,tableName);
          } catch (Exception e) {
-            System.out.println(e.getMessage());
+        	 stdb.exceptionStringz(exceptionString, e, cProp.getfException());
          }		
 	}
 	
 	public void execData(Statement stment, Connection connects, ExcelReader eR,String tabName)
 	{
-		
+		exceptionString[1] = "execData(Statement stment, Connection connects, ExcelReader eR,String tabName)";
 	      try {
 	    	  dDriven = eR.getAllData();
 	  	      intCol  = eR.getColCount();/*need this variable to help data looping for excel datas*/
@@ -99,23 +96,23 @@ public class JDBCInsertFromExcel {
 	  				queryz = sBuild.append(queryz.substring(0, queryz.length()-1)).append(");").toString();
 	  				
 	  				this.strQueries = queryz;/*SET STRING QUERIES*/
-//	  				System.out.println(queryz); /*if you just want to take the string from generate query, uncomment this*/
-		  				stment.executeUpdate(queryz);/*if you want to execute sql statement from jdbc uncomment this*/
+	  				System.out.println(queryz); /*if you just want to take the string from generate query, uncomment this*/
+	  				stment.executeUpdate(queryz);/*if you want to execute sql statement from jdbc uncomment this*/
 	  			}
 	  			connects.commit();
   				System.out.println("Record is inserted in the table successfully..................");
 	      } catch (Exception e) {
-	         System.out.println(e.getMessage());
+	    	  stdb.exceptionStringz(exceptionString, e, cProp.getfException());
            try {
 				connects.rollback();
 			} catch (SQLException e1) {
-				System.out.println(e1.getMessage());
+				stdb.exceptionStringz(exceptionString, e1, cProp.getfException());
 			}
 	      } finally {
 	         try {
-				closeResource(stment, connects);
+	        	 stdb.closeResource(stment, connects);
 			} catch (SQLException e) {
-				System.out.println(e.getMessage()+" --- "+e.getCause());
+				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}  
 	      }
 	      System.out.println("Please check it in the MariaDB/MySQL Table......... ……..");
@@ -125,18 +122,5 @@ public class JDBCInsertFromExcel {
 	public String getStrQueries()
 	{
 		return strQueries;
-	}
-	
-	public void closeResource(Statement stmt, Connection connect) throws SQLException{
-        if(stmt != null) {
-            if(!stmt.isClosed())
-            	stmt.close();
-            stmt = null;
-        }
-
-        if(connect != null) {
-            if(!connect.isClosed())
-                connect.close();
-        }
-    }
+	}	
 }

@@ -1,11 +1,10 @@
 package edu.paulo.app.example.withstatement;
 
-import java.sql.DriverManager;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-import org.mariadb.jdbc.Connection;
-import org.mariadb.jdbc.Statement;
-
+import edu.paulo.app.core.connection.SimpleToolsDB;
 import edu.paulo.app.util.CSVScanner;
 import edu.paulo.app.util.ConfigProperties;
 
@@ -19,49 +18,47 @@ public class JDBCInsertFromCSVSecond {
 	private String[][] dDriven ;
 	private int intCol  = 0; /*accomodate count of column in csv file*/
 	private String queryz = "";
-	int intCheck = 0;
 	private String strQueries = "";
+	private ConfigProperties cProp ;
+	private String[] exceptionString = new String[2];
+	private SimpleToolsDB stdb;
 	
-	public JDBCInsertFromCSVSecond(String strPathCSV, String tableName, String[] conString)
+	public JDBCInsertFromCSVSecond(String strPathCSV, String tableName)
 	{
-		setData(strPathCSV, tableName, conString);
+		stdb = new SimpleToolsDB();
+		exceptionString[0] = "JDBCInsertFromCSVSecond";
+		cProp = new ConfigProperties();
+		setData(strPathCSV, tableName);
 	}
-	public static void main(String[] args) {
-		
-		ConfigProperties cProp = new ConfigProperties();		
-	    String [] strCon = new String[4];
-	    strCon[0] = cProp.getDbDriver();/*Database Driver*/
-		strCon[1] = cProp.getDbConnString();/*Connection String*/
-		strCon[2] = cProp.getDbUserName();/*Database userName*/
-		strCon[3] = cProp.getDbPassword();/*Database passwOrd*/
-		JDBCInsertFromCSVSecond jife = new JDBCInsertFromCSVSecond("./data/DataDriven.csv", "insert_demo", strCon);
-		/*Parameter order , path excel file --- sheet name ---- table name ---- driver & connection string*/
+	public static void main(String[] args) {		
+		/*Parameter order , path csv fil ---- table name */
+		JDBCInsertFromCSVSecond jife = new JDBCInsertFromCSVSecond("./data/DataDriven.csv", "insert_demo");
    }
 	
-	public void setData(String strPathCSV, String tableName, String[] conString)
+	public void setData(String strPathCSV, String tableName)
 	{
+		exceptionString[1] = "setData(String strPathCSV, String tableName)";
 		csvReader = new CSVScanner(strPathCSV);
 		/*SET DRIVER BY PARAMETER*/
 		try {
-            Class.forName(conString[0]);
-            conn = (Connection) DriverManager.getConnection(conString[1],conString[2],conString[3]);
+            conn =  stdb.getDatabaseConnection();
 		    System.out.println("Connection is created successfully!!");
 		    stmt = conn.createStatement();
 			
 		    execData(stmt, conn, csvReader,tableName);
          } catch (Exception e) {
-            System.out.println(e.getMessage());
+        	 stdb.exceptionStringz(exceptionString, e, cProp.getfException());
          }		
 	}
 	
 	public void execData(Statement stment, Connection connects, CSVScanner csvR,String tabName)
 	{
-		
+		  exceptionString[1] = "execData(Statement stment, Connection connects, CSVScanner csvR,String tabName)";
 	      try {
 	    	  dDriven = csvR.getBR();
 	  	      intCol  = csvR.getCol();/*need this variable to help data looping for csv datas*/	  		  
 	  		  
-	  	    connects.setAutoCommit(false);/*DEFAULT IS AUTOCOMMIT TRUE , IF THIS METHOD REMOVED , ENTRY DATA WILL NOT BE CLEAN !!*/
+	  	      connects.setAutoCommit(false);/*DEFAULT IS AUTOCOMMIT TRUE , IF THIS METHOD REMOVED , ENTRY DATA WILL NOT BE CLEAN !!*/
 		  	    /*GENERATE QUERY HEADER*/
 		  		sBuild.setLength(0);
 		  		queryz = sBuild.append("INSERT INTO ").append(tabName).append(" ( ").toString();
@@ -106,21 +103,21 @@ public class JDBCInsertFromCSVSecond {
   				this.strQueries = queryz;/*SET STRING QUERIES*/
   				
   				System.out.println(queryz); /*if you just want to take the string from generate query, uncomment this*/
-//	  				stment.executeUpdate(queryz);/*if you want to execute sql statement from jdbc uncomment this*/
-  	        connects.commit();
+  				stment.executeUpdate(queryz);/*if you want to execute sql statement from jdbc uncomment this*/
+  				connects.commit();
   				System.out.println("Record is inserted in the table successfully..................");
 	      } catch (Exception e) {
-	         System.out.println(e.getMessage());
+	    	  stdb.exceptionStringz(exceptionString, e, cProp.getfException());
            try {
 				connects.rollback();
 			} catch (SQLException e1) {
-				System.out.println(e1.getMessage());
+				stdb.exceptionStringz(exceptionString, e1, cProp.getfException());
 			}
 	      } finally {
 	         try {
-				closeResource(stment, connects);
+				stdb.closeResource(stment, connects);
 			} catch (SQLException e) {
-				System.out.println(e.getMessage()+" --- "+e.getCause());
+				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}  
 	      }
 	      System.out.println("Please check it in the MariaDB/MySQL Table......... ……..");
@@ -131,17 +128,4 @@ public class JDBCInsertFromCSVSecond {
 	{
 		return strQueries;
 	}
-	
-	public void closeResource(Statement stmt, Connection connect) throws SQLException{
-        if(stmt != null) {
-            if(!stmt.isClosed())
-            	stmt.close();
-            stmt = null;
-        }
-
-        if(connect != null) {
-            if(!connect.isClosed())
-                connect.close();
-        }
-    }
 }
