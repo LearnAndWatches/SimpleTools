@@ -15,6 +15,25 @@ public class GoLive {
 		System.out.println(sTP.getEmStartTls());
 		System.out.println(sTP.getEmUsrName());
 		System.out.println(sTP.getfDelay());
-		System.out.println(sTP.getfException());		
+		System.out.println(sTP.getfException());
+
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		
+		sTP = new ConfigProperties();
+		System.out.println(sTP.getDbConnString());
+		System.out.println(sTP.getDbPassword());
+		System.out.println(sTP.getDbUserName());
+		System.out.println(sTP.getEmAuth());
+		System.out.println(sTP.getEmPassword());
+		System.out.println(sTP.getEmPort());
+		System.out.println(sTP.getEmStartTls());
+		System.out.println(sTP.getEmUsrName());
+		System.out.println(sTP.getfDelay());
+		System.out.println(sTP.getfException());
 	}
 }

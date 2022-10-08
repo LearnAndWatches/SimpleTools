@@ -22,15 +22,10 @@ public class ConfigProperties {
     private FileReader fReader;
     private String openCVPath;
     private String openCVDLL;
-    private String[] exceptionString = new String[2];
-    private ConfigProperties cProp ;
-	private SimpleToolsDB stdb;
 	
     public ConfigProperties()
     {
     	try {
-    		cProp = new ConfigProperties();
-    	    stdb = new SimpleToolsDB();
     		fReader = new FileReader("./config.properties");
     		properties.load(fReader);
     		openCVDLL =  properties.getProperty("opencv.dll").toString();
@@ -47,14 +42,12 @@ public class ConfigProperties {
             fDelay = properties.getProperty("flag.delay").toString();
 		} catch (Exception e) {
 			e.printStackTrace();
-			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}
     	finally {
     		try {
     			fReader.close();
 			} catch (Exception e) {
 				e.printStackTrace();
-				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}
 		}
     }
