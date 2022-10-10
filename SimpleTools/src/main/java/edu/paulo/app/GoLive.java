@@ -35,5 +35,6 @@ public class GoLive {
 		System.out.println(sTP.getEmUsrName());
 		System.out.println(sTP.getfDelay());
 		System.out.println(sTP.getfException());
+		
 	}
 }
