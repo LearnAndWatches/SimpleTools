@@ -1,21 +1,25 @@
 package edu.paulo.app.research.opencv;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-
+import edu.paulo.app.util.ConfigProperties;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+
 public class OpenCVTest {
 
+	private static ConfigProperties cProp = new ConfigProperties();
 
-
+	/*making picture from colorful became gray*/
 	    public static void main(String[] arges) throws MalformedURLException, 
 	IOException, Exception {
+
+
 	    loadLibraries();
 
 	    // create and print on screen a 3x3 identity matrix
@@ -24,14 +28,14 @@ public class OpenCVTest {
 	    System.out.println("mat = " + mat.dump());
 
 	    // prepare to convert a RGB image in gray scale
-	    String location = System.getProperty("user.dir")+"\\data\\Poli.jpg";
+	    String location = System.getProperty("user.dir")+"/opencvsample/Ori-2.jpg";
 	    System.out.print("Convert the image at " + location + " in gray scale... ");
 	    // get the jpeg image from the internal resource folder
 	    Mat image = Imgcodecs.imread(location);
 	    // convert the image in gray scale
 	    Imgproc.cvtColor(image, image, Imgproc.COLOR_RGB2GRAY);
 	    // write the new image on disk
-	    Imgcodecs.imwrite(System.getProperty("user.dir")+"\\data\\Poli-gray.jpg", image);
+	    Imgcodecs.imwrite(System.getProperty("user.dir")+"/opencvsample/Ori-2-gray.jpg", image);
 	    System.out.println("Done!");
 
 	}
@@ -43,7 +47,7 @@ public class OpenCVTest {
 	        File fileOut = null;
 	        String osName = System.getProperty("os.name");
 //	            String opencvpath = System.getProperty("user.dir");
-	        String opencvpath = "C:\\opencv46\\opencv\\build\\java\\";
+	        String opencvpath = cProp.getOpenCVPath();
 	        if (osName.startsWith("Windows")) {
 	            int bitness = Integer.parseInt(System.getProperty("sun.arch.data.model"));
 	            if (bitness == 32) {

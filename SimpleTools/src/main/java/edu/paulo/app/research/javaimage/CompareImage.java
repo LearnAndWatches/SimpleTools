@@ -1,20 +1,19 @@
 package edu.paulo.app.research.javaimage;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.io.File;
-
-import javax.imageio.ImageIO;
 
 public class CompareImage {
 
 	
 	public static void main(String[] args) {
-		boolean isTrue = compareImage(new File("C:\\Users\\pollc\\OneDrive\\Desktop\\hahaha\\Ori-2-Compress.jpg"), new File("C:\\Users\\pollc\\OneDrive\\Desktop\\hahaha\\compare\\Ori-2-Compress.jpg"));
+		boolean isTrue = compareImage(new File(System.getProperty("user.dir")+"/opencvsample/Ori-2.jpg"), new File(System.getProperty("user.dir")+"/opencvsample/Ori-2-Compress.jpg"));
 		System.out.println(isTrue);
 		float k =0;
 		try {
-			k = compareImages(new File("C:\\Users\\pollc\\OneDrive\\Desktop\\hahaha\\Ori-2-Compress.jpg"), new File("C:\\Users\\pollc\\OneDrive\\Desktop\\hahaha\\compare\\Ori-2-Compress.jpg"));
+			k = compareImages(new File(System.getProperty("user.dir")+"/opencvsample/Ori-2.jpg"), new File(System.getProperty("user.dir")+"/opencvsample/Ori-2-Compress.jpg"));
 		} catch (Exception e) {}
 		System.out.println(k);
 	}

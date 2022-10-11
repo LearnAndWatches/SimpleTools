@@ -1,4 +1,4 @@
-package edu.paulo.app.core.constant;
+package edu.paulo.app.core.connection;
 
 public class Constants {
 

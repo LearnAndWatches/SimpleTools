@@ -1,4 +1,4 @@
-package edu.paulo.app.core.driver;
+package edu.paulo.app.core.connection;
 
 import org.openqa.selenium.WebDriver;
 

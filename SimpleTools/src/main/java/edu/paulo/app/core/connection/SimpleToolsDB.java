@@ -1,21 +1,12 @@
 package edu.paulo.app.core.connection;
 
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import edu.paulo.app.util.ConfigProperties;
+import org.apache.log4j.Logger;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.log4j.Logger;
-
-import edu.paulo.app.util.ConfigProperties;
 
 public class SimpleToolsDB {
 
@@ -37,7 +28,7 @@ public class SimpleToolsDB {
     
     public SimpleToolsDB()
     {
-    	list = new ArrayList<HashMap<String,Object>>();
+    	list = new ArrayList<>();
         sbuilds  = new StringBuilder();
         new StringBuilder();
         exceptionString = new String[3];
@@ -50,19 +41,20 @@ public class SimpleToolsDB {
     }
     
     public void setDatabaseConnection() {
-        exceptionString[1] = "setDatabaseConnection()";
+        
         try {
         	driver = new org.mariadb.jdbc.Driver();
         	DriverManager.registerDriver(driver);
         	this.con = DriverManager.getConnection(sConString, sLogin, sPwd);
         } catch(Exception e) {
+        	exceptionString[1] = "setDatabaseConnection() -- EXCEPTION LINE 60";
         	exceptionStringz(exceptionString,e,cProp.getfException());
         	con = null;
         }
     }
     
     public Connection getDatabaseConnection() {        
-        exceptionString[1] = "getDatabaseConnection()";
+        
         try
         {
         	if(con==null)
@@ -71,6 +63,7 @@ public class SimpleToolsDB {
             }
         }catch(Exception e)
         {
+        	exceptionString[1] = "getDatabaseConnection()  -- EXCEPTION LINE 75";
         	exceptionStringz(exceptionString,e,cProp.getfException());
         }
         return con;
@@ -78,31 +71,32 @@ public class SimpleToolsDB {
     
     public void destroyConnection()
     {
-    	exceptionString[1] = "killConnection()";
+    	
         try {
             con = null;
             DriverManager.deregisterDriver(driver);
             driver =null;
         } catch (SQLException e) {
+        	exceptionString[1] = "destroyConnection()---- -- EXCEPTION LINE 87";
         	exceptionStringz(exceptionString,e,cProp.getfException());
         }
     }
     
     public List<HashMap<String,Object>> getListData(String[] strArr,ResultSet rs)
     {
-    	exceptionString[1] = "getListData(String[] strArr,ResultSet rs)";
+    	
     	list.clear();
     	try {
 			while(rs.next())
 			  {
-				  hMap = new HashMap<String,Object>();
-				  for(int i =0;i<strArr.length;i++)
-				  {
-					  hMap.put(strArr[i],rs.getObject(strArr[i])==null?"":rs.getString(strArr[i]));
-				  }
+				  hMap = new HashMap<>();
+                  for (String s : strArr) {
+                      hMap.put(s, rs.getObject(s) == null ? "" : rs.getString(s));
+                  }
 				  list.add(hMap);
 			  }
 		} catch (SQLException e) {
+			exceptionString[1] = "List<HashMap<String,Object>> getListData(String[] strArr,ResultSet rs) -- EXCEPTION LINE 107";
 			exceptionStringz(exceptionString,e,cProp.getfException());
 		}
     	
@@ -110,7 +104,7 @@ public class SimpleToolsDB {
     }
     
     public void setPStatement(int i, Object obj, PreparedStatement preStmt) {
-        exceptionString[1] = "setStatement()";
+        
 
         try{
             if (obj instanceof Long) {
@@ -118,7 +112,7 @@ public class SimpleToolsDB {
             }else if (obj instanceof Integer) {
                 preStmt.setInt(i+1, (Integer) obj);
             }else if(obj instanceof java.util.Date){
-                preStmt.setTimestamp(i+1, new java.sql.Timestamp(((java.util.Date) obj).getTime()));
+                preStmt.setTimestamp(i+1, new Timestamp(((java.util.Date) obj).getTime()));
             }else if(obj instanceof Blob){
                 preStmt.setBlob(i+1, (Blob)obj);
             }
@@ -126,6 +120,7 @@ public class SimpleToolsDB {
                 preStmt.setString(i+1, obj.toString());
             }
         }   catch (SQLException e) {
+        	exceptionString[1] = "setPStatement(int i, Object obj, PreparedStatement preStmt) ----  -- EXCEPTION LINE 132";
         	exceptionStringz(exceptionString,e,cProp.getfException());
         }
     }
@@ -148,12 +143,12 @@ public class SimpleToolsDB {
         catch (Exception e) 
         {
             done = 0;
-            exceptionString[1] = "executeQuery(String query)==> con.rollback()";
-            
+            exceptionString[1] = "executeQuery(String query) ------ EXCEPTION LINE 155";            
             exceptionStringz(exceptionString,e,cProp.getfException());
             try {
                 con.rollback();
             } catch (SQLException ex) {
+            	exceptionString[1] = "executeQuery(String query) ------ EXCEPTION LINE 160";
             	exceptionStringz(exceptionString,e,cProp.getfException());
             }
         }
@@ -165,7 +160,7 @@ public class SimpleToolsDB {
             }
             catch (SQLException e)
             {
-                exceptionString[1] = "executeQuery(String query) ==> finally -> closeResource(ps,con)";                
+            	exceptionString[1] = "executeQuery(String query) ------ EXCEPTION LINE 171";                
                 exceptionStringz(exceptionString,e,cProp.getfException());
             }
         }
@@ -191,7 +186,6 @@ public class SimpleToolsDB {
             {
             	pstmt.close();
             }                
-            pstmt = null;
         }
 
         if(connect != null) {
@@ -201,13 +195,13 @@ public class SimpleToolsDB {
             destroyConnection();
         }
     }
+    
     public void closeResource(Statement stmt, Connection connect) throws SQLException{
         if(stmt != null) {
             if(!stmt.isClosed())
             {
             	stmt.close();
             }                
-            stmt = null;
         }
 
         if(connect != null) {
@@ -221,14 +215,16 @@ public class SimpleToolsDB {
     public void closeResource(ResultSet rst, Statement stmt, Connection connect) throws SQLException{
         if(stmt != null) {
             if(!stmt.isClosed())
-            	stmt.close();
-            stmt = null;
+            {
+                stmt.close();
+            }
         }
 
         if(rst != null) {
             if(!rst.isClosed())
+            {
                 rst.close();
-            rst = null;
+            }
         }
 
         if(connect != null) {
@@ -240,14 +236,16 @@ public class SimpleToolsDB {
     public void closeResource(ResultSet rst, PreparedStatement pstmt, Connection connect) throws SQLException{
         if(pstmt != null) {
             if(!pstmt.isClosed())
+            {
                 pstmt.close();
-            pstmt = null;
+            }
         }
 
         if(rst != null) {
             if(!rst.isClosed())
+            {
                 rst.close();
-            rst = null;
+            }
         }
 
         if(connect != null) {
@@ -260,13 +258,16 @@ public class SimpleToolsDB {
     public void closeResource(CallableStatement cs, Connection connect) throws SQLException{
         if(cs != null) {
             if(!cs.isClosed())
+            {
                 cs.close();
-            cs = null;
+            }
         }
 
         if(connect != null) {
             if(!connect.isClosed())
+            {
                 connect.close();
+            }
             destroyConnection();
         }
     }

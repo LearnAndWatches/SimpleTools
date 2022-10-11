@@ -1,12 +1,12 @@
 package edu.paulo.app.example.withpreparedstatement;
 
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.core.io.csv.CSVScanner;
+import edu.paulo.app.util.ConfigProperties;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import edu.paulo.app.core.connection.SimpleToolsDB;
-import edu.paulo.app.util.CSVScanner;
-import edu.paulo.app.util.ConfigProperties;
 /*
  * THIS CLASS USING SIMPLE DATA TO THE insert_demo table
  */

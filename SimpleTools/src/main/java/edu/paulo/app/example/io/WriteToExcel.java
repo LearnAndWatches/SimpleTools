@@ -1,9 +1,9 @@
 package edu.paulo.app.example.io;
 
+import edu.paulo.app.core.io.poi.ExcelWriter;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.paulo.app.util.ExcelWriter;
 
 public class WriteToExcel {
 

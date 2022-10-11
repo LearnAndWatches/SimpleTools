@@ -1,6 +1,7 @@
-package edu.paulo.app.core.driver;
+package edu.paulo.app.core.connection;
 
-import edu.paulo.app.core.constant.Constants;
+
+import edu.paulo.app.core.connection.driver.*;
 
 public class DriverStrategyImplementer {
 
@@ -8,7 +9,7 @@ public class DriverStrategyImplementer {
 		
 		switch (strategy) {
 		case Constants.CHROME:
-			return new Chrome();		
+			return new Chrome();
 		case Constants.FIREFOX:
 			return new Firefox();
 		case Constants.EDGE:

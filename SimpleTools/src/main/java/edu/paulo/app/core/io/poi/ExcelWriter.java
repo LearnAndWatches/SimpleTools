@@ -1,21 +1,16 @@
-package edu.paulo.app.util;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
+package edu.paulo.app.core.io.poi;
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.util.ConfigProperties;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import edu.paulo.app.core.connection.SimpleToolsDB;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
 
 public class ExcelWriter {
 
@@ -57,7 +52,6 @@ public class ExcelWriter {
 	public void writeToExcel(List<HashMap<String,Object>> datas, String pathDestination, String[] header )
 	{
 		mapData.clear();
-		exceptionString[1] = "writeToExcel(List<HashMap<String,Object>> datas, String pathDestination, String[] header )";
 		
 		try {
 			int k=1;/*initiate for rows data in excel*/
@@ -94,6 +88,7 @@ public class ExcelWriter {
 			out = new BufferedOutputStream(fOutS);
 		} catch (Exception e) {
 			e.printStackTrace();
+			exceptionString[1] = "writeToExcel(List<HashMap<String,Object>> datas, String pathDestination, String[] header )  -- EXCEPTION LINE  98";
 			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}
 		finally {
@@ -105,6 +100,7 @@ public class ExcelWriter {
 		        out.close();
 			} catch (IOException e) {
 				e.printStackTrace();
+				exceptionString[1] = "writeToExcel(List<HashMap<String,Object>> datas, String pathDestination, String[] header ) -- EXCEPTION LINE  110";
 				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}			
 		}
@@ -113,7 +109,6 @@ public class ExcelWriter {
 	public void writeToExcelManual(List<String[]> datas, String pathDestination)
 	{
 		mapData.clear();
-		exceptionString[1] = "writeToExcelManual(List<String[]> datas, String pathDestination)";
 		
 		try {
 			int k=1;/*initiate for rows data in excel*/
@@ -150,6 +145,7 @@ public class ExcelWriter {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			exceptionString[1] = "writeToExcelManual(List<String[]> datas, String pathDestination) -- EXCEPTION LINE  155";
 			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}
 		finally {
@@ -161,8 +157,9 @@ public class ExcelWriter {
 		        out.close();
 			} catch (IOException e) {
 				e.printStackTrace();
+				exceptionString[1] = "writeToExcelManual(List<String[]> datas, String pathDestination) -- EXCEPTION LINE 165";
 				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
-			}			
+			}
 		}
 	}
 }

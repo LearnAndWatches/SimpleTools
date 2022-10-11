@@ -1,17 +1,16 @@
-package edu.paulo.app.util;
+package edu.paulo.app.core.io.poi;
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.util.ConfigProperties;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
-
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import edu.paulo.app.core.connection.SimpleToolsDB;
 
 public class ExcelReader {
 	
@@ -31,8 +30,7 @@ public class ExcelReader {
 	private String[] exceptionString = new String[2];
 	
 	public ExcelReader(String excelPath, String sheetName) {
-		exceptionString[0] = "ExcelReader";
-		exceptionString[1] = "ExcelReader(String excelPath, String sheetName)";
+		exceptionString[0] = "ExcelReader";		
 		try {
 			cProp = new ConfigProperties();
 		    stdb = new SimpleToolsDB();
@@ -46,6 +44,7 @@ public class ExcelReader {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			exceptionString[1] = "ExcelReader(String excelPath, String sheetName) -- EXCEPTION LINE  50";
 			stdb.exceptionStringz(exceptionString, e, cProp.getfException());		
 		}
 		finally {
@@ -55,6 +54,7 @@ public class ExcelReader {
 				wBook.close();
 			} catch (IOException e) {
 				e.printStackTrace();
+				exceptionString[1] = "ExcelReader(String excelPath, String sheetName) -- EXCEPTION LINE  60";
 				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}
 		}
@@ -74,7 +74,6 @@ public class ExcelReader {
 	{
 		try
 		{
-			exceptionString[1] = "setData()";
 			strAllData = new String[intRowCount][intColCount];		
 			arrWithoutHeader = new String[intRowCount-1][intColCount];/*BECAUSE OF remove a Header so Row for this object must be minus 1 */
 			loopRows =0;
@@ -97,6 +96,7 @@ public class ExcelReader {
 		}catch(Exception e)
 		{
 			e.printStackTrace();
+			exceptionString[1] = "setData() --- LINE 102";
 			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}
 		this.strAllData = strAllData;

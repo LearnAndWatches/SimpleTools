@@ -1,21 +1,15 @@
 package edu.paulo.app.research.opencv;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.opencv.core.DMatch;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfByte;
-import org.opencv.core.MatOfDMatch;
-import org.opencv.core.MatOfKeyPoint;
-import org.opencv.core.Scalar;
+import edu.paulo.app.util.OpenCVLibraries;
+import org.opencv.core.*;
 import org.opencv.features2d.DescriptorMatcher;
 import org.opencv.features2d.Features2d;
 import org.opencv.features2d.SIFT;
 import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 
-import edu.paulo.app.util.OpenCVLibraries;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SURFFLANNMatching {
 

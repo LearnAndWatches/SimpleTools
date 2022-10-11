@@ -1,16 +1,15 @@
 package edu.paulo.app.example.withstatement;
 
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.core.io.poi.ExcelWriter;
+import edu.paulo.app.util.ConfigProperties;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
-
-import edu.paulo.app.core.connection.SimpleToolsDB;
-import edu.paulo.app.util.CSVWriting;
-import edu.paulo.app.util.ConfigProperties;
-import edu.paulo.app.util.ExcelWriter;
 
 public class JDBCSelectDemo {
 	
@@ -25,7 +24,7 @@ public class JDBCSelectDemo {
 	       SimpleToolsDB stdb = new SimpleToolsDB();
 //	       String [] k = {"id","jobtitle","emailaddress","firstnamelastname","randoms","kosmetik","ktp","kampus","mat_kul","institusi","skill","departemen","saham","no_cc","obat","tgl",};
 	       
-		   try {		      
+		   try {
 		      conn = stdb.getDatabaseConnection();
 		      System.out.println("Connection is created successfully:");
 		      stmt = conn.createStatement();

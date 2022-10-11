@@ -1,15 +1,14 @@
 package edu.paulo.app.research.javaimage;
 
-import java.awt.Color;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import javax.imageio.ImageIO;
-
 public class ComparingImages {
    public static void main(String[] args) throws Exception {
-      BufferedImage img1 = ImageIO.read(new File("C:\\Users\\pollc\\OneDrive\\Desktop\\hahaha\\Ori-2.jpg"));
-      BufferedImage img2 = ImageIO.read(new File("C:\\Users\\pollc\\OneDrive\\Desktop\\hahaha\\Ori-2-Compress.jpg"));
+      BufferedImage img1 = ImageIO.read(new File(System.getProperty("user.dir")+"/opencvsample/Ori-2.jpg"));
+      BufferedImage img2 = ImageIO.read(new File(System.getProperty("user.dir")+"/opencvsample/Ori-2-Compress.jpg"));
       int w1 = img1.getWidth();
       int w2 = img2.getWidth();
       int h1 = img1.getHeight();

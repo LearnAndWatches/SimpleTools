@@ -1,9 +1,9 @@
 package edu.paulo.app.example.io;
 
+import edu.paulo.app.core.io.csv.CSVWriting;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.paulo.app.util.CSVWriting;
 
 public class WriteCSVManual {
 

@@ -1,11 +1,11 @@
 package edu.paulo.app.example.withstatement;
 
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.util.ConfigProperties;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import edu.paulo.app.core.connection.SimpleToolsDB;
-import edu.paulo.app.util.ConfigProperties;
 
 public class JDBCInsertDemo {
 	
@@ -22,10 +22,10 @@ public class JDBCInsertDemo {
 			      conn = stdb.getDatabaseConnection();
 			      System.out.println("Connection is created successfully:");
 			      stmt = conn.createStatement();
-			      String queryz = "INSERT INTO insert_demo " + "VALUES (1, 'John', 'Smith')";
+			      String queryz = "INSERT INTO insert_demo VALUES (1, 'John', 'Smith')";
 			      stmt.executeUpdate(queryz);
 			      
-			      queryz = "INSERT INTO insert_demo " + "VALUES (2, 'Carol', 'Alexandria')";
+			      queryz = "INSERT INTO insert_demo VALUES (2, 'Carol', 'Alexandria')";
 			      stmt.executeUpdate(queryz);
 			      
 			      System.out.println("Record is inserted in the table successfully..................");
