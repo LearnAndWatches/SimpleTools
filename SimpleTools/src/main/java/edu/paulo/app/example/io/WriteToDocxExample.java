@@ -1,6 +1,6 @@
 package edu.paulo.app.example.io;
 
-import edu.paulo.app.util.MSWordWriter;
+import edu.paulo.app.core.io.poi.MSWordWriter;
 
 public class WriteToDocxExample {
 	public static void main(String[] args) throws Exception {

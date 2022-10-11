@@ -1,5 +1,6 @@
 package edu.paulo.app.research.opencv;
 
+import edu.paulo.app.util.OpenCVLibraries;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfKeyPoint;
 import org.opencv.core.Scalar;
@@ -8,15 +9,13 @@ import org.opencv.features2d.Features2d;
 import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 
-import edu.paulo.app.util.OpenCVLibraries;
-
 public class DetectingKeyPoints{
    public static void main(String args[]) throws Exception {
       //Loading the OpenCV core library
 	  OpenCVLibraries ocvLib = new OpenCVLibraries();
 	  ocvLib.loadLibraries();
       //Reading the contents of the image
-      String file = System.getProperty("user.dir")+"\\data\\Poli.jpg";
+      String file = System.getProperty("user.dir")+"/opencvsample/Ori-1.jpg";
       Mat src = Imgcodecs.imread(file);
       //Reading the key points of the image
       Mat dst = new Mat();

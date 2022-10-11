@@ -1,12 +1,13 @@
-package edu.paulo.app.util;
+package edu.paulo.app.core.io.csv;
+
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.util.ConfigProperties;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.paulo.app.core.connection.SimpleToolsDB;
 
 public class CSVScanner {
 
@@ -22,13 +23,14 @@ public class CSVScanner {
 	private SimpleToolsDB stdb;
 	private String[] exceptionString = new String[2];
 	
-	public CSVScanner(String pathCsv)
+	public CSVScanner(String pathCSV)
 	{
 		exceptionString[0] = "CSVScanner";
 		try {
-			br = new BufferedReader(new FileReader(pathCsv));
+			br = new BufferedReader(new FileReader(pathCSV));
 			setBR();/*INITIATE ALL ELEMENTS WHEN CLASS CREATED*/
 		} catch (Exception e) {
+			exceptionString[1] = "CSVScanner(String pathCSV)  -- EXCEPTION LINE 35";
 			e.printStackTrace();
 			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}
@@ -37,6 +39,7 @@ public class CSVScanner {
 				br.close();
 			} catch (IOException e) {
 				e.printStackTrace();
+				exceptionString[1] = "CSVScanner(String pathCSV)  -- LINE 40";
 				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}
 		}
@@ -44,7 +47,7 @@ public class CSVScanner {
 	
 	public void setBR() throws IOException
 	{
-		exceptionString[1] = "setBR() throws IOException";
+		exceptionString[1] = "setBR()  -- EXCEPTION LINE 35";
 		try {
 			listArr = new ArrayList<String[]>();
 			while ((line = br.readLine())!=null) {
@@ -70,12 +73,14 @@ public class CSVScanner {
 		}catch(Exception e)
 		{
 			e.printStackTrace();
+			exceptionString[1] = "setBR() -- LINE 73";
 			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}
 		this.arrIOBr = arrIOBr;
 		this.arrWithoutHeader = arrWithoutHeader;
 	}
 	
+	/*PURE DATA ONLY WITHOUT COLUMN NAME*/
 	public String[][] getDataWithoutHeader()
 	{
 		return arrWithoutHeader;

@@ -1,10 +1,9 @@
-package edu.paulo.app.core.driver;
+package edu.paulo.app.core.connection.driver;
 
-import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-
+import edu.paulo.app.core.connection.DriverStrategy;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
 	public class Edge implements DriverStrategy {
 

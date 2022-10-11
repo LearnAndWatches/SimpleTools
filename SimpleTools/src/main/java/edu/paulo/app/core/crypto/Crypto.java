@@ -1,4 +1,4 @@
-package edu.paulo.app.util;
+package edu.paulo.app.core.crypto;
 
 import org.bouncycastle.crypto.BufferedBlockCipher;
 import org.bouncycastle.crypto.engines.AESLightEngine;
@@ -11,9 +11,6 @@ public class Crypto {
 	private static String defaultKey = "aafd12f438cae52378b479e5076ddec2f06cb58faafd12f6";
 	//aafd12f659cae63489b479e5076ddec2f06cb58faafd12f6
 	//28E79E2AFC5F7745FCCABE2F6257C2EF4C4EDFB37324814ED4137C288711A386
-
-    public Crypto() {
-    }
 
     public static String performEncrypt(String keyText, String plainText) {
         try{
@@ -55,13 +52,10 @@ public class Crypto {
 
     public static void main(String[] args) {
 
-        String x = new Crypto().performEncrypt("Admin_123");
-        
-        
+        String x = new Crypto().performEncrypt("MbontenEnten@123");        
         System.out.println(x);
         
-        x = new Crypto().performDecrypt("bea6e02a5eea0d40e8c6d3971b78f617");
+        x = new Crypto().performDecrypt("250699910096bf2e12d4f5ff39b8ef");
         System.out.println(x);
-
     }
 }

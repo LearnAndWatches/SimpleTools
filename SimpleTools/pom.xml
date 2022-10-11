@@ -1,166 +1,197 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>SimpleTools</groupId>
-  <artifactId>SimpleTools</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  <name>Sharing-Tools</name>
-  <url>http://maven.apache.org</url>
-  
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>edu.paul.simpletools</groupId>
+	<artifactId>SimpleTools</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<build>
-        <pluginManagement>
+
+		<pluginManagement>
 			<plugins>
-				 <plugin>
-				 	<groupId>org.apache.maven.plugins</groupId>
-				    <artifactId>maven-surefire-plugin</artifactId>
-				    <version>3.0.0-M7</version>	
-				     <configuration>
-					 	<argLine>-Djava.library.path=${project.build.outputDirectory}/lib</argLine>
-					 </configuration>			    		
-				 </plugin>
-				 
-				 <plugin>
-			 		<groupId>org.apache.maven.plugins</groupId>
-				    <artifactId>maven-compiler-plugin</artifactId>
-				    <version>3.10.1</version>
-				    <configuration>
-				    	<source>17</source>
-				    	<target>17</target>
-				    </configuration>
-				 </plugin>
-				 
-				 <plugin>
-				      <groupId>org.apache.maven.plugins</groupId>
-				    	<artifactId>maven-assembly-plugin</artifactId>
-				      <configuration>
-				        <archive>
-				          <manifest>
-				            <mainClass>edu.paulo.app.GoLive</mainClass>
-				          </manifest>
-				        </archive>
-				        <descriptorRefs>
-				          <descriptorRef>jar-with-dependencies</descriptorRef>
-				        </descriptorRefs>
-				      </configuration>
-				      <executions>
-				        <execution>
-				          <id>make-assembly</id> <!-- this is used for inheritance merges -->
-				          <phase>package</phase> <!-- bind to the packaging phase -->
-				          <goals>
-				            <goal>single</goal><!-- command to build : clean compile assembly:single -->
-				          </goals>
-				        </execution>
-				      </executions>
-				    </plugin>
-			 </plugins>        
-        </pluginManagement>
-    </build>  
-  
-  <dependencies>
-  
-  <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
-	<dependency>
-	    <groupId>org.mariadb.jdbc</groupId>
-	    <artifactId>mariadb-java-client</artifactId>
-	    <version>3.0.8</version>
-	</dependency>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>3.0.0-M7</version>
+					<configuration>
+						<argLine>-Djava.library.path=${project.build.outputDirectory}/lib</argLine>
+					</configuration>
+				</plugin>
 
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.10.1</version>
+					<configuration>
+						<source>17</source>
+						<target>17</target>
+					</configuration>
+				</plugin>
 
-  	<dependency>
-	    <groupId>org.bouncycastle</groupId>
-	    <artifactId>bcprov-jdk15to18</artifactId>
-	   <version>1.72</version>
-	</dependency>
-    
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.9</version>
-    </dependency>
-    
-    <dependency>
-		<groupId>com.sun.mail</groupId>
-		<artifactId>javax.mail</artifactId>
-		<version>1.6.2</version>
-	</dependency>
-	
-	<dependency>
-		    <groupId>io.github.bonigarcia</groupId>
-		    <artifactId>webdrivermanager</artifactId>
-		    <version>5.1.0</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-	<dependency>
-	    <groupId>org.seleniumhq.selenium</groupId>
-	    <artifactId>selenium-java</artifactId>
-	    <version>4.4.0</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>commons-io</groupId>
-	    <artifactId>commons-io</artifactId>
-	    <version>2.11.0</version>
-	</dependency>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifest>
+								<mainClass>edu.paulo.app.GoLive</mainClass>
+							</manifest>
+						</archive>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
+					</configuration>
+					<executions>
+						<execution>
+							<id>make-assembly</id> <!-- this is used for inheritance merges -->
+							<phase>package</phase> <!-- bind to the packaging phase -->
+							<goals>
+								<goal>single</goal><!-- command to build : clean compile assembly:single -->
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
-	<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
 		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi-ooxml</artifactId>
-		    <version>5.2.2</version>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>3.0.8</version>
 		</dependency>
 
-	<!-- https://mvnrepository.com/artifact/log4j/log4j -->
-	<dependency>
-	    <groupId>log4j</groupId>
-	    <artifactId>log4j</artifactId>
-	    <version>1.2.17</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>org.apache.pdfbox</groupId>
-	    <artifactId>pdfbox</artifactId>
-	    <version>2.0.26</version>
-	</dependency>
 
-	<!-- https://mvnrepository.com/artifact/com.github.romankh3/image-comparison -->
-	<dependency>
-	    <groupId>com.github.romankh3</groupId>
-	    <artifactId>image-comparison</artifactId>
-	    <version>4.4.0</version>
-	</dependency>	
-	
-		<!-- 
-		<dependency> 
-			 <groupId>org</groupId> 
-			 <artifactId>opencv</artifactId>
-			 <version>3.4.9</version>
-			 <version>4.6.0</version>  
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15to18</artifactId>
+			<version>1.72</version>
 		</dependency>
-		-->
-		<dependency> 
-			 <groupId>org</groupId> 
-			 <artifactId>opencv</artifactId>
-			 <version>4.6.0</version>  
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
 		</dependency>
-		
-		
+
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>5.1.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>4.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>2.0.26</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.github.romankh3/image-comparison -->
+		<dependency>
+			<groupId>com.github.romankh3</groupId>
+			<artifactId>image-comparison</artifactId>
+			<version>4.4.0</version>
+		</dependency>
+
+		<!--
+        <dependency>
+             <groupId>org</groupId>
+             <artifactId>opencv</artifactId>
+             <version>3.4.9</version>
+             <version>4.6.0</version>
+        </dependency>
+        -->
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>opencv</artifactId>
+			<version>4.6.0</version>
+		</dependency>
+
+
 		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
 		<dependency>
-		    <groupId>com.opencsv</groupId>
-		    <artifactId>opencsv</artifactId>
-		    <version>5.7.0</version>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.7.0</version>
 		</dependency>
 
-  	</dependencies> 
-  	
-  	
+		<!--        &lt;!&ndash; https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports &ndash;&gt;-->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.20.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.70</version>
+		</dependency>
+
+
+	</dependencies>
+
+<!--	handling error Could not find artifact com.lowagie:itext:pom:2.1.7.js10-->
+	<repositories>
+		<repository>
+			<id>jaspersoft-third-party</id>
+			<url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+		</repository>
+		<repository>
+			<id>jr-ce-snapshots</id>
+			<name>JasperReports CE Snapshots</name>
+			<url>https://jaspersoft.jfrog.io/jaspersoft/jr-ce-snapshots</url>
+		</repository>
+		<repository>
+			<id>jr-ce-releases</id>
+			<name>JasperReports CE Releases</name>
+			<url>https://jaspersoft.jfrog.io/jaspersoft/jr-ce-releases</url>
+		</repository>
+	</repositories>
 
 	<properties>
-		<!-- Generic properties -->
-        <java.version>17</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties> 
-    
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 </project>

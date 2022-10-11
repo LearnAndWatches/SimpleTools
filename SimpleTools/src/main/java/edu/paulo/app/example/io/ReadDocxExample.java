@@ -1,6 +1,6 @@
 package edu.paulo.app.example.io;
 
-import edu.paulo.app.util.MSWordReader;
+import edu.paulo.app.core.io.poi.MSWordReader;
 
 public class ReadDocxExample {
 

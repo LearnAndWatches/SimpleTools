@@ -1,9 +1,9 @@
-package edu.paulo.app.core.driver;
+package edu.paulo.app.core.connection.driver;
 
+import edu.paulo.app.core.connection.DriverStrategy;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Firefox implements DriverStrategy {
 

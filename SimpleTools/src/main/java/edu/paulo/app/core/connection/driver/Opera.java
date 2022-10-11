@@ -1,12 +1,12 @@
-package edu.paulo.app.core.driver;
+package edu.paulo.app.core.connection.driver;
 
+import edu.paulo.app.core.connection.DriverStrategy;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.opera.OperaDriver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 @SuppressWarnings("deprecation")
-public class Opera implements DriverStrategy{
+public class Opera implements DriverStrategy {
 
 	@Override
 	public WebDriver setStrategy() {

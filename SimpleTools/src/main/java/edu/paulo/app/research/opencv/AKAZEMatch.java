@@ -1,22 +1,7 @@
 package edu.paulo.app.research.opencv;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.DMatch;
-import org.opencv.core.KeyPoint;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfDMatch;
-import org.opencv.core.MatOfKeyPoint;
-import org.opencv.core.Scalar;
+import edu.paulo.app.util.OpenCVLibraries;
+import org.opencv.core.*;
 import org.opencv.features2d.AKAZE;
 import org.opencv.features2d.DescriptorMatcher;
 import org.opencv.features2d.Features2d;
@@ -25,7 +10,13 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import edu.paulo.app.util.OpenCVLibraries;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AKAZEMatch {
 
@@ -38,9 +29,9 @@ public class AKAZEMatch {
 	
 	public void run(String[] args) {
         //! [load]
-		String filename1 = System.getProperty("user.dir")+"\\opencvsample\\graf1.png";
-        String filename2 = System.getProperty("user.dir")+"\\opencvsample\\graf3.png";
-        String filename3 = System.getProperty("user.dir")+"\\opencvsample\\H1to3p.xml";
+		String filename1 = System.getProperty("user.dir")+"/opencvsample/graf1.png";
+        String filename2 = System.getProperty("user.dir")+"/opencvsample/graf3.png";
+        String filename3 = System.getProperty("user.dir")+"/opencvsample/H1to3p.xml";
 //        String filename1 = args.length > 2 ? args[0] : "../data/graf1.png";
 //        String filename2 = args.length > 2 ? args[1] : "../data/graf3.png";
 //        String filename3 = args.length > 2 ? args[2] : "../data/H1to3p.xml";

@@ -1,12 +1,12 @@
 package edu.paulo.app.example.withpreparedstatement;
 
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.core.io.poi.ExcelReader;
+import edu.paulo.app.util.ConfigProperties;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import edu.paulo.app.core.connection.SimpleToolsDB;
-import edu.paulo.app.util.ConfigProperties;
-import edu.paulo.app.util.ExcelReader;
 
 public class JDBCInsertFromExcelPSTwo {
 

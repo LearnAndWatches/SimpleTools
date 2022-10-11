@@ -1,13 +1,12 @@
-package edu.paulo.app.util;
+package edu.paulo.app.core.io.poi;
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.util.ConfigProperties;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.util.List;
-
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-
-import edu.paulo.app.core.connection.SimpleToolsDB;
 
 public class MSWordReader {
 
@@ -32,8 +31,7 @@ public class MSWordReader {
 	
 	public String getData(String pathSource)
 	{
-		sBuild.setLength(0);
-		exceptionString[1] = "getData(String pathSource)";
+		sBuild.setLength(0);		
 		strA = "";
 		try {
 			fis = new FileInputStream(pathSource);
@@ -49,6 +47,7 @@ public class MSWordReader {
             
 		} catch (Exception e) {
 			e.printStackTrace();
+			exceptionString[1] = "getData(String pathSource) -- EXCEPTION LINE  53";
 			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}finally {
 
@@ -59,8 +58,9 @@ public class MSWordReader {
 	            paragraphs =null;//set this object to be destroyed by GC
 			
 			}catch (Exception e) {
-							e.printStackTrace();
-							stdb.exceptionStringz(exceptionString, e, cProp.getfException());
+				exceptionString[1] = "getData(String pathSource) -- EXCEPTION LINE  64";
+				e.printStackTrace();
+				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}
 
 		}

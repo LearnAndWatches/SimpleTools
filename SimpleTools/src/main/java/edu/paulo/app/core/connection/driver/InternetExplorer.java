@@ -1,11 +1,11 @@
-package edu.paulo.app.core.driver;
+package edu.paulo.app.core.connection.driver;
 
+import edu.paulo.app.core.connection.DriverStrategy;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class InternetExplorer implements DriverStrategy{
+public class InternetExplorer implements DriverStrategy {
 
 	@Override
 	public WebDriver setStrategy() {

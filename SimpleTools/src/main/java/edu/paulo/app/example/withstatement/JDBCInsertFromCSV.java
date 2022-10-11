@@ -1,12 +1,12 @@
 package edu.paulo.app.example.withstatement;
 
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.core.io.csv.CSVScanner;
+import edu.paulo.app.util.ConfigProperties;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import edu.paulo.app.core.connection.SimpleToolsDB;
-import edu.paulo.app.util.CSVScanner;
-import edu.paulo.app.util.ConfigProperties;
 
 public class JDBCInsertFromCSV {
 
@@ -90,18 +90,18 @@ public class JDBCInsertFromCSV {
 	  				sBuild.setLength(0);
 	  				queryz = sBuild.append(queryz.substring(0, queryz.length()-1)).append(");").toString();
 	  				this.strQueries = queryz;
-	  				System.out.println(queryz); /*if you just want to take the string from generate query, uncomment this*/
+//	  				System.out.println(queryz); /*if you just want to take the string from generate query, uncomment this*/
 		  				stment.executeUpdate(queryz);/*if you want to execute sql statement from jdbc uncomment this*/
 	  			}
 	  			 connects.commit();
   				System.out.println("Record is inserted in the table successfully..................");
 		      } catch (Exception e) {
 		    	  stdb.exceptionStringz(exceptionString, e, cProp.getfException());
-	           try {
-					connects.rollback();
-				} catch (SQLException e1) {
-					stdb.exceptionStringz(exceptionString, e1, cProp.getfException());
-				}
+		           try {
+						connects.rollback();
+					} catch (SQLException e1) {
+						stdb.exceptionStringz(exceptionString, e1, cProp.getfException());
+					}
 		      } finally {
 		         try {
 		        	 stdb.closeResource(stment, connects);

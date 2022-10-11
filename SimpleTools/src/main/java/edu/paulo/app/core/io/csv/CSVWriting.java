@@ -1,14 +1,14 @@
-package edu.paulo.app.util;
+package edu.paulo.app.core.io.csv;
+
+import com.opencsv.CSVWriter;
+import edu.paulo.app.core.connection.SimpleToolsDB;
+import edu.paulo.app.util.ConfigProperties;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.opencsv.CSVWriter;
-
-import edu.paulo.app.core.connection.SimpleToolsDB;
 
 public class CSVWriting {
 
@@ -41,7 +41,6 @@ public class CSVWriting {
 	public void writeToCsv(List<HashMap<String,Object>> datas, String pathDestination,String[] header,char separator)
 	{
 		listConvert.clear();
-		exceptionString[1] = "writeToCsv(List<HashMap<String,Object>> datas, String pathDestination,String[] header)";
 		try
 		{
 			fW = new FileWriter(new File(pathDestination));
@@ -69,6 +68,7 @@ public class CSVWriting {
 		}catch(Exception e)
 		{
 			e.printStackTrace();
+			exceptionString[1] = "writeToCsv(List<HashMap<String,Object>> datas, String pathDestination,String[] header,char separator)  -- EXCEPTION LINE 73";
 			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}finally {
 
@@ -77,18 +77,18 @@ public class CSVWriting {
 		        writer.flush();
 				writer.close();
 				fW.close();
-			}catch (Exception e) {
-							e.printStackTrace();
-							stdb.exceptionStringz(exceptionString, e, cProp.getfException());
+			}catch (Exception e) {				
+				e.printStackTrace();
+				exceptionString[1] = "writeToCsv(List<HashMap<String,Object>> datas, String pathDestination,String[] header,char separator)  -- EXCEPTION LINE 84";
+				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}
-
 		}
 	}
 	
 	/*THE DATA SET MANUAL*/
 	public void writeToCsv(List<String[]> datas, String pathDestination,char separator)
 	{
-		exceptionString[1] = "writeToCsv(List<HashMap<String,Object>> datas, String pathDestination)";
+		
 		try
 		{
 			fW = new FileWriter(new File(pathDestination));
@@ -96,10 +96,11 @@ public class CSVWriting {
                     CSVWriter.NO_QUOTE_CHARACTER, 
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER, 
                     CSVWriter.DEFAULT_LINE_END);
-	        writer.writeAll(datas); 
+	        writer.writeAll(datas);
 			
 		}catch(Exception e)
 		{
+			exceptionString[1] = "writeToCsv(List<String[]> datas, String pathDestination,char separator) -- EXCEPTION LINE 106";
 			e.printStackTrace();
 			stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 		}finally {
@@ -110,8 +111,9 @@ public class CSVWriting {
 				writer.close();					
 				fW.close();
 			}catch (Exception e) {
-							e.printStackTrace();
-							stdb.exceptionStringz(exceptionString, e, cProp.getfException());
+				e.printStackTrace();
+				exceptionString[1] = "writeToCsv(List<String[]> datas, String pathDestination,char separator) --  EXCEPTION LINE  117";
+				stdb.exceptionStringz(exceptionString, e, cProp.getfException());
 			}
 
 		}
