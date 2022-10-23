@@ -17,9 +17,9 @@ public class MatchingKeypoints {
 	  OpenCVLibraries ocvLib = new OpenCVLibraries();
 	  ocvLib.loadLibraries();
 	  
-      String file1 = System.getProperty("user.dir")+"/opencvsample/Ori-1.jpg";
+      String file1 = System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-1.jpg";
       Mat src1 = Imgcodecs.imread(file1);
-      String file2 = System.getProperty("user.dir")+"/opencvsample/Ori-1-Compress.jpg";
+      String file2 = System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-1-Compress.jpg";
       Mat src2 = Imgcodecs.imread(file2);
       //Creating an empty matrix to store the destination image
       Mat dst = new Mat();

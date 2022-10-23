@@ -15,7 +15,7 @@ public class ReadTextFile {
 	private String[] exceptionString = new String[2];
 	private ConfigProperties cProp;
 	private SimpleToolsDB stdb;
-	private String contentFile; 
+	private String contentFile;
 	private byte[] contentOfFile;
 	
 	public ReadTextFile(String pathFile)

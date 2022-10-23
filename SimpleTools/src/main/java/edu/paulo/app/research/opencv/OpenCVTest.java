@@ -28,14 +28,14 @@ public class OpenCVTest {
 	    System.out.println("mat = " + mat.dump());
 
 	    // prepare to convert a RGB image in gray scale
-	    String location = System.getProperty("user.dir")+"/opencvsample/Ori-2.jpg";
+	    String location = System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-2.jpg";
 	    System.out.print("Convert the image at " + location + " in gray scale... ");
 	    // get the jpeg image from the internal resource folder
 	    Mat image = Imgcodecs.imread(location);
 	    // convert the image in gray scale
 	    Imgproc.cvtColor(image, image, Imgproc.COLOR_RGB2GRAY);
 	    // write the new image on disk
-	    Imgcodecs.imwrite(System.getProperty("user.dir")+"/opencvsample/Ori-2-gray.jpg", image);
+	    Imgcodecs.imwrite(System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-2-gray.jpg", image);
 	    System.out.println("Done!");
 
 	}

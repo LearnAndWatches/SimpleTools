@@ -28,7 +28,8 @@ public class SimpleToolsDB {
     
     public SimpleToolsDB()
     {
-    	list = new ArrayList<>();
+//        BasicConfigurator.configure();
+        list = new ArrayList<>();
         sbuilds  = new StringBuilder();
         new StringBuilder();
         exceptionString = new String[3];

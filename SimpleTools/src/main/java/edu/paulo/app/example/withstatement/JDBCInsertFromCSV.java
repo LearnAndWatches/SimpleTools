@@ -34,7 +34,7 @@ public class JDBCInsertFromCSV {
 	
     public static void main(String[] args) {
 		/*Parameter order , path csv file --- table name*/
-		JDBCInsertFromCSV jife = new JDBCInsertFromCSV("./data/DataDriven.csv", "insert_demo");		
+		JDBCInsertFromCSV jife = new JDBCInsertFromCSV("./materials/data/DataDriven.csv", "insert_demo");
    }
 	
 	public void setData(String strPathCSV, String tableName)

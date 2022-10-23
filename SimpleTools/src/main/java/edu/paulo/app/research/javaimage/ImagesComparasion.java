@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 public class ImagesComparasion {
 
 	public static void main(String[] args) {
-		BufferedImage expectedImage = ImageComparisonUtil.readImageFromResources(System.getProperty("user.dir")+"/opencvsample/Ori-1.jpg");
-		BufferedImage actualImage = ImageComparisonUtil.readImageFromResources(System.getProperty("user.dir")+"/opencvsample/Ori-1-Compress.jpg");
+		BufferedImage expectedImage = ImageComparisonUtil.readImageFromResources(System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-1.jpg");
+		BufferedImage actualImage = ImageComparisonUtil.readImageFromResources(System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-1-Compress.jpg");
 		ImageComparison comparison = new ImageComparison(expectedImage, actualImage);
 		ImageComparisonResult result = comparison.compareImages();
 		expectedImage.flush();

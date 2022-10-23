@@ -33,13 +33,13 @@ public class JasperReportFill {
 	             * 1- export to PDF
 	             */
 	            JasperExportManager.exportReportToPdfFile(printFileName,
-						System.getProperty("user.dir")+"/outputio/sample_report.pdf");
+						System.getProperty("user.dir")+ "/src/main/resources/outputio/sample_report.pdf");
 
 	            /**
 	             * 2- export to HTML
 	             */
 	            JasperExportManager.exportReportToHtmlFile(printFileName,
-	            		System.getProperty("user.dir")+"/outputio/sample_report.html");
+	            		System.getProperty("user.dir")+ "/src/main/resources/outputio/sample_report.html");
 
 	            /**
 	             * 3- export to Excel sheet
@@ -49,7 +49,7 @@ public class JasperReportFill {
 	            exporter.setParameter(JRExporterParameter.INPUT_FILE_NAME,
 	               printFileName);
 	            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
-						System.getProperty("user.dir")+"/outputio/sample_report.xls");
+						System.getProperty("user.dir")+ "/src/main/resources/outputio/sample_report.xls");
 
 	            exporter.exportReport();
 	         }

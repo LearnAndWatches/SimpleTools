@@ -17,8 +17,8 @@ public class SURFFLANNMatching {
 		
 //	    String filename1 = args.length > 1 ? args[0] : "foto_111.png";
 //	    String filename2 = args.length > 1 ? args[1] : "foto_222.png";
-	   String filename1 = System.getProperty("user.dir")+"\\opencvsample\\box.png";
-       String filename2 = System.getProperty("user.dir")+"\\opencvsample\\box_in_scene.png";
+	   String filename1 = System.getProperty("user.dir")+"/materials/\\opencvsample\\box.png";
+       String filename2 = System.getProperty("user.dir")+"/materials/\\opencvsample\\box_in_scene.png";
 	    Mat img1 = Imgcodecs.imread(filename1, Imgcodecs.IMREAD_GRAYSCALE);
 	    Mat img2 = Imgcodecs.imread(filename2, Imgcodecs.IMREAD_GRAYSCALE);
 	    if (img1.empty() || img2.empty()) {

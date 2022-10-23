@@ -8,7 +8,7 @@ import java.util.List;
 public class WriteCSVManual {
 
 	public static void main(String[] args) {
-		String pathOutout = System.getProperty("user.dir")+"\\outputio\\SampleManual.csv";
+		String pathOutout = System.getProperty("user.dir")+"/materials\\outputio\\SampleManual.csv";
     	List<String[]> list = new ArrayList<String[]>();
     	
     	String[] strArr = new String[4];

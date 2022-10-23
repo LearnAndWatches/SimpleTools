@@ -10,7 +10,7 @@ import java.sql.SQLException;
 /*
  * THIS CLASS USING SIMPLE DATA TO THE insert_demo table
  */
-public class JDBCInsertFromCSVPS {
+public class JDBCInsertFromCSVPSExample {
 
 	private Connection conn = null;
 	private PreparedStatement ps = null;
@@ -24,7 +24,7 @@ public class JDBCInsertFromCSVPS {
 	private SimpleToolsDB stdb;
 
     
-    public JDBCInsertFromCSVPS(String strPathCSV, String tableName)
+    public JDBCInsertFromCSVPSExample(String strPathCSV, String tableName)
 	{
     	stdb = new SimpleToolsDB();
     	exceptionString[0] = "JDBCInsertFromCSVPS";
@@ -34,7 +34,7 @@ public class JDBCInsertFromCSVPS {
     
 	public static void main(String[] args) {
 		/*Parameter order , path csv file ---- table name */
-		JDBCInsertFromCSVPS jife = new JDBCInsertFromCSVPS("./data/DataDriven.csv","insert_demo");
+		JDBCInsertFromCSVPSExample jife = new JDBCInsertFromCSVPSExample("./materials/data/DataDriven.csv","insert_demo");
 	}
 	
 	public void setData(String strPathCSV, String tableName)

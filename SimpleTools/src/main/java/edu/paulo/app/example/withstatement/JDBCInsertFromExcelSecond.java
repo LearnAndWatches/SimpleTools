@@ -33,7 +33,7 @@ public class JDBCInsertFromExcelSecond {
 	
 	public static void main(String[] args) {		
 		/*Parameter order , path excel file --- sheet name ---- table name */
-		JDBCInsertFromExcelSecond jife = new JDBCInsertFromExcelSecond("./data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo");
+		JDBCInsertFromExcelSecond jife = new JDBCInsertFromExcelSecond("./materials/data/DataDriven.xlsx","JDBCDemoInsert", "insert_demo");
    }
 	
 	public void setData(String strPathExcel, String strSheetName, String tableName)

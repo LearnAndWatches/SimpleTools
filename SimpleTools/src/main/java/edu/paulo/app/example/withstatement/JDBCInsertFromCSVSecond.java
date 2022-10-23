@@ -32,7 +32,7 @@ public class JDBCInsertFromCSVSecond {
 	}
 	public static void main(String[] args) {		
 		/*Parameter order , path csv fil ---- table name */
-		JDBCInsertFromCSVSecond jife = new JDBCInsertFromCSVSecond("./data/DataDriven.csv", "insert_demo");
+		JDBCInsertFromCSVSecond jife = new JDBCInsertFromCSVSecond("./materials/data/DataDriven.csv", "insert_demo");
    }
 	
 	public void setData(String strPathCSV, String tableName)

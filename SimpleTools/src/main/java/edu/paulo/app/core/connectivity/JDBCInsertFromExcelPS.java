@@ -39,6 +39,7 @@ public class JDBCInsertFromExcelPS {
 		    dDriven = excelReader.getAllData();
   	        intCol  = excelReader.getColCount();
   	        queryz = generateQueryInsert(dDriven, tableName, intCol);
+			System.out.println("QUERY --> "+queryz);
   	        ps = conn.prepareStatement(queryz) ;
   	        
   	        dDriven = excelReader.getDataWithoutHeader();
@@ -54,9 +55,11 @@ public class JDBCInsertFromExcelPS {
   	        conn.commit();
   	      System.out.println("Record is inserted in the table successfully..................");
          } catch (Exception e) {
+			System.out.println("MASUK EXCEPTION 1");
         	 exceptionString[1] = "setData(String strPathExcel, String strSheetName, String tableName ) -- EXCEPTION LINE 63";
         	 stdb.exceptionStringz(exceptionString, e, cProp.getfException());
             try {
+				System.out.println("MASUK ROLLBACK");
 				conn.rollback();
 			} catch (Exception e1) {
 				stdb.exceptionStringz(exceptionString, e1, cProp.getfException());
@@ -64,6 +67,7 @@ public class JDBCInsertFromExcelPS {
          }
 		finally {
 			try {
+				System.out.println("MASUK CLOSE RESOURCES");
 				stdb.closeResource(ps, conn);
 			} catch (Exception e) {
 				exceptionString[1] = "setData(String strPathExcel, String strSheetName, String tableName ) -- EXCEPTION LINE 75";

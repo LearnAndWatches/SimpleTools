@@ -29,9 +29,9 @@ public class AKAZEMatch {
 	
 	public void run(String[] args) {
         //! [load]
-		String filename1 = System.getProperty("user.dir")+"/opencvsample/graf1.png";
-        String filename2 = System.getProperty("user.dir")+"/opencvsample/graf3.png";
-        String filename3 = System.getProperty("user.dir")+"/opencvsample/H1to3p.xml";
+		String filename1 = System.getProperty("user.dir")+ "/src/main/resources/opencvsample/graf1.png";
+        String filename2 = System.getProperty("user.dir")+ "/src/main/resources/opencvsample/graf3.png";
+        String filename3 = System.getProperty("user.dir")+ "/src/main/resources/opencvsample/H1to3p.xml";
 //        String filename1 = args.length > 2 ? args[0] : "../data/graf1.png";
 //        String filename2 = args.length > 2 ? args[1] : "../data/graf3.png";
 //        String filename3 = args.length > 2 ? args[2] : "../data/H1to3p.xml";

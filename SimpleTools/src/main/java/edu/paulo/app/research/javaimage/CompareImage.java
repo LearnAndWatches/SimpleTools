@@ -9,11 +9,11 @@ public class CompareImage {
 
 	
 	public static void main(String[] args) {
-		boolean isTrue = compareImage(new File(System.getProperty("user.dir")+"/opencvsample/Ori-2.jpg"), new File(System.getProperty("user.dir")+"/opencvsample/Ori-2-Compress.jpg"));
+		boolean isTrue = compareImage(new File(System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-2.jpg"), new File(System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-2-Compress.jpg"));
 		System.out.println(isTrue);
 		float k =0;
 		try {
-			k = compareImages(new File(System.getProperty("user.dir")+"/opencvsample/Ori-2.jpg"), new File(System.getProperty("user.dir")+"/opencvsample/Ori-2-Compress.jpg"));
+			k = compareImages(new File(System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-2.jpg"), new File(System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-2-Compress.jpg"));
 		} catch (Exception e) {}
 		System.out.println(k);
 	}

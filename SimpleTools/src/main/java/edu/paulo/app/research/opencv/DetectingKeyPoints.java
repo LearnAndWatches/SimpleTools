@@ -15,7 +15,7 @@ public class DetectingKeyPoints{
 	  OpenCVLibraries ocvLib = new OpenCVLibraries();
 	  ocvLib.loadLibraries();
       //Reading the contents of the image
-      String file = System.getProperty("user.dir")+"/opencvsample/Ori-1.jpg";
+      String file = System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-1.jpg";
       Mat src = Imgcodecs.imread(file);
       //Reading the key points of the image
       Mat dst = new Mat();

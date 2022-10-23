@@ -7,8 +7,8 @@ import java.io.File;
 
 public class ComparingImages {
    public static void main(String[] args) throws Exception {
-      BufferedImage img1 = ImageIO.read(new File(System.getProperty("user.dir")+"/opencvsample/Ori-2.jpg"));
-      BufferedImage img2 = ImageIO.read(new File(System.getProperty("user.dir")+"/opencvsample/Ori-2-Compress.jpg"));
+      BufferedImage img1 = ImageIO.read(new File(System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-2.jpg"));
+      BufferedImage img2 = ImageIO.read(new File(System.getProperty("user.dir")+ "/src/main/resources/opencvsample/Ori-2-Compress.jpg"));
       int w1 = img1.getWidth();
       int w2 = img2.getWidth();
       int h1 = img1.getHeight();

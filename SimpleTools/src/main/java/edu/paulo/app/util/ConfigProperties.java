@@ -29,7 +29,7 @@ public class ConfigProperties {
 	public ConfigProperties()
 	{
 		try {
-			fReader = new FileReader("config.properties");
+			fReader = new FileReader("./materials/config.properties");
 			properties.load(fReader);
 			openCVDLL =  properties.getProperty("opencv.dll").toString();
 			openCVPath = properties.getProperty("opencv.path").toString();

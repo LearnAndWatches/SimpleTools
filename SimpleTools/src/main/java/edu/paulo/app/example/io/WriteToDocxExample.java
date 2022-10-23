@@ -5,7 +5,7 @@ import edu.paulo.app.core.io.poi.MSWordWriter;
 public class WriteToDocxExample {
 	public static void main(String[] args) throws Exception {
         //Instantiate WordGenerator Class
-		String pathOutput= System.getProperty("user.dir")+"\\outputio\\GenerateDocx.docx";
+		String pathOutput= System.getProperty("user.dir")+"/materials\\outputio\\GenerateDocx.docx";
 		String txtWord = new StringBuilder().
 				append("Java is a general purpose, high-level programming language developed by Sun Microsystems.").
 				append(" The Java programming language was developed by a small team of engineers, ").

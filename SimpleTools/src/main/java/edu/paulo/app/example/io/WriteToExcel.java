@@ -10,7 +10,7 @@ public class WriteToExcel {
     // any exceptions need to be caught 
     public static void main(String[] args) throws Exception 
     { 
-    	String pathOutout = System.getProperty("user.dir")+"\\outputio\\SampleManual.xlsx";
+    	String pathOutout = System.getProperty("user.dir")+"/materials\\outputio\\SampleManual.xlsx";
     	List<String[]> list = new ArrayList<String[]>();
     	
     	String[] strArr = new String[4];
